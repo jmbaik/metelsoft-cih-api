@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.user.mapper.AdminUserMapper">
+
+    <select id="selectAdminLoginInfo" resultType="metel.cih.api.dto.AdminUserDto" parameterType="metel.cih.api.dto.AdminUserDto">
+        SELECT a.email, a.password, a.phone, a.name, a.user_id as userId, a.regdate as regDate, a.upddate as updDate
+            , a.c_code as cCode, a.admin_level as adminLevel, b.name as churchName, b.pic
+        FROM salem.admin_user a LEFT JOIN salem.church_code b on a.c_code = b.c_code
+        where 1=1
+        <if test='email != null and email != ""'>
+            and a.email = #{email}
+        </if>
+        <if test='phone != null and phone != ""'>
+            and a.phone = #{phone}
+        </if>
+        <if test='password != null and password != ""'>
+            and a.password = #{password}
+        </if>
+    </select>
+
+</mapper>

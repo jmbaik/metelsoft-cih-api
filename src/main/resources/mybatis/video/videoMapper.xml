@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.video.mapper.VideoMapper">
+    <select id="selectVideoList" resultType="metel.cih.api.dto.VideoDto" parameterType="hashmap">
+        SELECT a.c_code as churchCode, a.vid, a.cat, a.title, a.refer, a.speaker, a.thumnail, a.vdo_url as vdoUrl,
+        a.regdate as regDate, a.regid as regId, a.upddate as updDate, a.updid as updId,
+        (select name from church_code where a.c_code=c_code ) as churchName
+        FROM salem.video a where 1=1
+        <if test='churchCode != null and churchCode != ""'>
+            AND c_code = #{churchCode}
+        </if>
+        <if test='cat != null and cat != ""'>
+            and a.cat = #{cat}
+        </if>
+        <if test='title != null and title != ""'>
+            and a.title like concat('%', #{title}, '%')
+        </if>
+        order by a.c_code, a.vid desc
+    </select>
+
+    <select id="getSeqVideo" resultType="int">
+        select nextval(salem.video_seq)
+    </select>
+
+    <insert id="insertVideoClip" parameterType="metel.cih.api.dto.VideoDto">
+        INSERT INTO salem.video
+        (c_code, vid, cat, title, refer,
+            speaker, thumnail, vdo_url, regdate, regid,
+            upddate, updid)
+        VALUES( #{churchCode}, nextval(salem.video_seq), #{cat}, #{title}, #{refer},
+            #{speaker}, #{thumnail}, #{vdoUrl}, now(), #{regId},
+            now(), #{regId});
+    </insert>
+
+    <update id="updateVideoClip" parameterType="metel.cih.api.dto.VideoDto">
+        UPDATE salem.video
+        SET cat=#{cat},
+            title=#{title},
+            refer=#{refer},
+            speaker=#{speaker},
+            thumnail=#{thumnail},
+            vdo_url=#{vdoUrl},
+            upddate = now(),
+            updid = #{updId}
+        WHERE c_code=#{churchCode} AND vid=#{vid};
+    </update>
+
+<!--    <update id="saveVideoClip" parameterType="metel.cih.api.dto.VideoDto">-->
+<!--        INSERT INTO salem.video-->
+<!--            (c_code, vid, cat, title, refer, speaker, thumnail, vdo_url, regdate, regid, upddate, updid)-->
+<!--        VALUES( #{churchCode}, #{vid}, #{cat}, #{title}, #{refer},-->
+<!--            #{speaker}, #{thumnail}, #{vdoUrl}, now(), #{regId}, now(), #{updId})-->
+<!--        ON DUPLICATE KEY UPDATE-->
+<!--        cat=#{cat},-->
+<!--        title=#{title},-->
+<!--        refer=#{refer},-->
+<!--        speaker=#{speaker},-->
+<!--        thumnail=#{thumnail},-->
+<!--        vdo_url=#{vdoUrl},-->
+<!--        upddate = now(),-->
+<!--        updid = #{updId}-->
+<!--    </update>-->
+
+    <delete id="deleteVideoClip" parameterType="metel.cih.api.dto.VideoDto">
+        delete from salem.video where c_code=#{churchCode} and vid = #{vid}
+    </delete>
+
+</mapper>
