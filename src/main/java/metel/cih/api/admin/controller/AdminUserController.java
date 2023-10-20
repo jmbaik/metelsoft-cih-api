@@ -1,10 +1,10 @@
-package metel.cih.api.user.controller;
+package metel.cih.api.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import metel.cih.api.base.ApiResponse;
 import metel.cih.api.base.ResponseDto;
 import metel.cih.api.dto.AdminUserDto;
-import metel.cih.api.user.service.AdminUserService;
+import metel.cih.api.admin.service.AdminUserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

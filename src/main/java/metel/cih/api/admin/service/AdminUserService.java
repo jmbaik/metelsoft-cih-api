@@ -1,8 +1,8 @@
-package metel.cih.api.user.service;
+package metel.cih.api.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import metel.cih.api.dto.AdminUserDto;
-import metel.cih.api.user.mapper.AdminUserMapper;
+import metel.cih.api.admin.mapper.AdminUserMapper;
 import org.springframework.stereotype.Service;
 
 @Service
