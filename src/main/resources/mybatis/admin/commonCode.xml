@@ -6,4 +6,9 @@
         order by alias_code
     </select>
 
+    <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
+        SELECT c_code as churchCode, name, comment, pic
+        FROM cihdb.tb_church_code
+        order by c_code
+    </select>
 </mapper>
