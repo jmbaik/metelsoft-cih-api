@@ -19,4 +19,15 @@ public class CommonCodeService {
     public List<ChurchCodeDto> selectChurchCode(){
         return mapper.selectChurchCode();
     }
+
+    public int insertChurchCode(ChurchCodeDto dto){
+        return mapper.insertChurchCode(dto);
+    }
+    public int updateChurchCode(ChurchCodeDto dto){
+        return mapper.updateChurchCode(dto);
+    }
+
+    public int deleteChurchCode(ChurchCodeDto dto){
+        return mapper.deleteChurchCode(dto);
+    }
 }

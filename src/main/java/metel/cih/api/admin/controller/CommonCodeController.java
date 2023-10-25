@@ -20,15 +20,36 @@ public class CommonCodeController {
 
     @ResponseBody
     @GetMapping("/area-code")
-    public ResponseDto<List<AreaCodeDto>> getAreaCode(){
+    public ResponseDto<List<AreaCodeDto>> getAreaCode() {
         List<AreaCodeDto> list = service.selectAreaCode();
         return ApiResponse.Success(list);
     }
 
     @ResponseBody
     @GetMapping("/church-code")
-    public ResponseDto<List<ChurchCodeDto>> getChurchCode(){
+    public ResponseDto<List<ChurchCodeDto>> getChurchCode() {
         List<ChurchCodeDto> list = service.selectChurchCode();
         return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
+    @PostMapping("/church-code")
+    public ResponseDto<Integer> insertChurchCode(@RequestBody ChurchCodeDto churchCodeDto){
+        Integer result = service.insertChurchCode(churchCodeDto);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
+    @PutMapping("/church-code")
+    public ResponseDto<Integer> updateChurchCode(@RequestBody ChurchCodeDto churchCodeDto){
+        Integer result = service.updateChurchCode(churchCodeDto);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/church-code")
+    public ResponseDto<Integer> deleteChurchCode(@RequestBody ChurchCodeDto churchCodeDto){
+        Integer result = service.deleteChurchCode(churchCodeDto);
+        return ApiResponse.Success(result);
     }
 }

@@ -8,7 +8,25 @@
 
     <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
         SELECT c_code as churchCode, name, comment, pic
-        FROM cihdb.tb_church_code
+        FROM tb_church_code
         order by c_code
     </select>
+
+    <insert id="insertChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        INSERT INTO tb_church_code
+        (c_code, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
+        select concat(#{areaCode}, lpad(cast(substring(ifnull(max(c_code),'Z0000'), 2) as unsigned)+1, 4, '0')) as c_code
+            , #{name}, #{comment}, #{pic}, #{userId}, now(), #{userId}, now()
+        from tb_church_code where substring(c_code, 1, 1) = #{areaCode}
+    </insert>
+
+    <update id="updateChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        update tb_church_code set name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{userId}, upd_dt=now()
+        where c_code = #{churchCode}
+    </update>
+
+    <delete id="deleteChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        delete from tb_church_code where c_code = #{churchCode}
+    </delete>
+
 </mapper>

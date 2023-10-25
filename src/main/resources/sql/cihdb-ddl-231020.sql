@@ -31,9 +31,12 @@ CREATE TABLE `tb_church_code` (
   `name` varchar(200) NOT NULL,
   `comment` varchar(500) DEFAULT NULL,
   `pic` varchar(500) DEFAULT NULL,
+  `reg_id` varchar(100) DEFAULT NULL,
+  `reg_dt` datetime DEFAULT NULL,
+  `upd_id` varchar(100) DEFAULT NULL,
+  `upd_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`c_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 -- cihdb.tb_pastor definition
 
