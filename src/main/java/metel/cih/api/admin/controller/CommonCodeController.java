@@ -8,6 +8,7 @@ import metel.cih.api.base.ResponseDto;
 import metel.cih.api.dto.AdminUserDto;
 import metel.cih.api.dto.AreaCodeDto;
 import metel.cih.api.dto.ChurchCodeDto;
+import metel.cih.api.dto.PastorDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +51,33 @@ public class CommonCodeController {
     @DeleteMapping("/church-code")
     public ResponseDto<Integer> deleteChurchCode(@RequestBody ChurchCodeDto churchCodeDto){
         Integer result = service.deleteChurchCode(churchCodeDto);
+        return ApiResponse.Success(result);
+    }
+    @ResponseBody
+    @GetMapping("/pastor")
+    public ResponseDto<List<PastorDto>> getPastor() {
+        List<PastorDto> list = service.selectPastor();
+        return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
+    @PostMapping("/pastor")
+    public ResponseDto<Integer> insertPastor(@RequestBody PastorDto pastorDto){
+        Integer result = service.insertPastor(pastorDto);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
+    @PutMapping("/pastor")
+    public ResponseDto<Integer> updatePastor(@RequestBody PastorDto pastorDto){
+        Integer result = service.updatePastor(pastorDto);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/pastor")
+    public ResponseDto<Integer> deletePastor(@RequestBody PastorDto pastorDto){
+        Integer result = service.deletePastor(pastorDto);
         return ApiResponse.Success(result);
     }
 }

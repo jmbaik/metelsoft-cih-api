@@ -7,9 +7,9 @@
     </select>
 
     <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
-        SELECT c_code as churchCode, name, comment, pic
+        SELECT c_code as churchCode, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt
         FROM tb_church_code
-        order by c_code
+        order by upd_dt desc
     </select>
 
     <insert id="insertChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
@@ -27,6 +27,31 @@
 
     <delete id="deleteChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
         delete from tb_church_code where c_code = #{churchCode}
+    </delete>
+
+    <select id="selectPastor" resultType="metel.cih.api.dto.PastorDto" parameterType="hashmap">
+        SELECT a.p_code as pastorCode, a.c_code as churchCode, a.grade, a.name, a.comment, a.pic
+            , b.name as churchName
+            , a.reg_id, a.reg_dt, a.upd_id, a.upd_dt
+        FROM tb_pastor a inner join tb_church_code b on a.c_code = b.c_code
+        order by a.upd_dt desc
+    </select>
+
+    <insert id="insertPastor" parameterType="metel.cih.api.dto.PastorDto" >
+        INSERT INTO tb_pastor
+        (p_code, c_code, grade, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
+        select concat('P', lpad(cast(substring(ifnull(max(p_code), 'P000000'),2) as unsigned)+1, 6, '0')) as pastorCode
+            , #{churchCode}, #{grade}, #{name}, #{comment}, #{pic}, #{userId}, now(), #{userId}, now()
+        from tb_pastor
+    </insert>
+
+    <update id="updatePastor" parameterType="metel.cih.api.dto.PastorDto" >
+        update tb_pastor set grade=#{grade}, name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{userId}, upd_dt=now()
+        where p_code = #{pastorCode}
+    </update>
+
+    <delete id="deletePastor" parameterType="metel.cih.api.dto.PastorDto" >
+        delete from tb_pastor where p_code = #{pastorCode}
     </delete>
 
 </mapper>
