@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.youtube.mapper.YoutubeMapper">
+    <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubePastorDto" parameterType="hashmap">
+
+        SELECT a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd
+            , a.ovid, b.name as originName, a.youtubeid as youtubeId, a.upddt as updDt
+        FROM tb_youtube_pastor a inner join tb_origin_vid b on a.ovid = b.ovid
+        inner join tb_pastor c on a.p_code = c.p_code
+        <if test='pastorCode != null and pastorCode != ""'>
+            AND p_code = #{pastorCode}
+        </if>
+        <if test='ovid != null and ovid != ""'>
+            and a.ovid = #{ovid}
+        </if>
+        order by a.upddt desc
+    </select>
+</mapper>
