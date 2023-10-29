@@ -11,7 +11,7 @@ CREATE TABLE `tb_admins` (
   `regdate` datetime DEFAULT NULL,
   `upddate` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`email`,`c_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- cihdb.tb_church_code definition
@@ -26,7 +26,7 @@ CREATE TABLE `tb_church_code` (
   `upd_id` varchar(100) DEFAULT NULL,
   `upd_dt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`c_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- cihdb.tb_origin_vid definition
@@ -42,7 +42,7 @@ CREATE TABLE `tb_origin_vid` (
   `updid` varchar(100) DEFAULT NULL COMMENT '수정자',
   `upddt` datetime NOT NULL DEFAULT current_timestamp() COMMENT '수정일시',
   PRIMARY KEY (`ovid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- cihdb.tb_pastor definition
@@ -59,7 +59,7 @@ CREATE TABLE `tb_pastor` (
   `upd_id` varchar(100) DEFAULT NULL,
   `upd_dt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`p_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- cihdb.tb_youtube_pastor definition
@@ -76,4 +76,13 @@ CREATE TABLE `tb_youtube_pastor` (
   `updid` varchar(100) DEFAULT NULL COMMENT '수정자',
   `upddt` datetime NOT NULL DEFAULT current_timestamp() COMMENT '수정일시',
   PRIMARY KEY (`vid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- cihdb.tb_area_code definition
+
+CREATE TABLE `tb_area_code` (
+  `a_code` varchar(3) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `alias_code` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`a_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
