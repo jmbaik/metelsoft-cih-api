@@ -1,6 +1,6 @@
 -- cihdb.tb_admins definition
 
-CREATE TABLE `tb_admins` (
+CREATE OR REPLACE TABLE `tb_admins` (
   `email` varchar(200) NOT NULL,
   `c_code` varchar(5) NOT NULL,
   `user_id` varchar(100) NOT NULL,
