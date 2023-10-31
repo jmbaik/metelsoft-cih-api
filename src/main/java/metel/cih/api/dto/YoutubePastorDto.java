@@ -13,6 +13,7 @@ public class YoutubePastorDto {
     private String ovid;
     private String originName;
     private String youtubeId;
+    private String comment;
     private String userId;
     private String updDt;
 

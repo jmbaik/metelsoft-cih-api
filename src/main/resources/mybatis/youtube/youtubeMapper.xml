@@ -4,7 +4,7 @@
 
     <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubePastorDto" parameterType="hashmap">
         SELECT a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd
-            , a.ovid, b.name as originName, a.youtubeid as youtubeId, a.upddt as updDt
+            , a.ovid, b.name as originName, a.comment, a.youtubeid as youtubeId, a.upddt as updDt
         FROM tb_youtube_pastor a inner join tb_origin_vid b on a.ovid = b.ovid
         inner join tb_pastor c on a.p_code = c.p_code
         where 1=1
@@ -18,15 +18,15 @@
     </select>
     <insert id="insertYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
         INSERT INTO tb_youtube_pastor
-        (vid, p_code, title, create_ymd, ovid, youtubeid, regid, regdt, updid, upddt)
+        (vid, p_code, title, create_ymd, ovid, youtubeid, comment, regid, regdt, updid, upddt)
         select concat('V', #{pastorCode}, lpad(cast(substring(ifnull(max(vid), concat('V', #{pastorCode}, '00000')),9) as unsigned)+1, 5, '0')) as vid
-            , #{pastorCode}, #{title}, date_format(now(), '%Y%m%d'), #{ovid}, #{youtubeId}
+            , #{pastorCode}, #{title}, date_format(now(), '%Y%m%d'), #{ovid}, #{youtubeId}, #{comment}
             , #{userId}, now(), #{userId}, now()
         from tb_youtube_pastor where p_code = #{pastorCode}
     </insert>
     <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
         UPDATE cihdb.tb_youtube_pastor
-        SET p_code=#{pastorCode}, title=#{title}, ovid=#{ovid}, youtubeid=#{youtubeId}
+        SET p_code=#{pastorCode}, title=#{title}, ovid=#{ovid}, youtubeid=#{youtubeId}, comment=#{comment}
             , updid=#{userId}, upddt=now()
         WHERE vid=#{vid};
     </update>
@@ -35,14 +35,14 @@
     </delete>
 
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
-        SELECT ovid, name, title, channelurl as channelUrl, comment,  upddt as updDt
+        SELECT ovid, name as originName, title as originTitle, channelurl as channelUrl, comment as originComment,  upddt as updDt
         FROM tb_origin_vid
         where 1=1
-        <if test='name != null and name != ""'>
-            AND name like concat('%', #{name}, '%')
+        <if test='originName != null and originName != ""'>
+            AND name like concat('%', #{originName}, '%')
         </if>
-        <if test='title != null and title != ""'>
-            and title like concat('%', #{title}, '%')
+        <if test='originTitle != null and originTitle != ""'>
+            and title like concat('%', #{originTitle}, '%')
         </if>
     </select>
 
@@ -50,12 +50,12 @@
         INSERT INTO tb_origin_vid
         (ovid, name, title, channelurl, comment, regid, regdt, updid, upddt)
         select concat('R', lpad(cast(substring(ifnull(max(ovid), 'O000000'),2) as unsigned)+1, 6, '0')) as ovid
-            , #{name}, #{title}, #{channelUrl}, #{comment}, #{userId}, now(), #{userId}, now()
+            , #{originName}, #{originTitle}, #{channelUrl}, #{originComment}, #{userId}, now(), #{userId}, now()
         from tb_origin_vid
     </insert>
     <update id="updateOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
         UPDATE tb_origin_vid
-        SET name=#{name}, title=#{title}, channelurl=#{channelUrl}, comment=#{comment}, updid=#{userId}, upddt=now()
+        SET name=#{originName}, title=#{originTitle}, channelurl=#{channelUrl}, comment=#{originComment}, updid=#{userId}, upddt=now()
         WHERE ovid=#{ovid}
     </update>
     <delete id="deleteOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">

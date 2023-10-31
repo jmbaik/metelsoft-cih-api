@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class OriginVidDto {
     private String ovid;
-    private String name;
-    private String title;
+    private String originName;
+    private String originTitle;
     private String channelUrl;
-    private String comment;
+    private String originComment;
     private String userId;
     private String updDt;
 }
