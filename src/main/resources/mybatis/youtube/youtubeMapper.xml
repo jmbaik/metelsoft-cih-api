@@ -44,6 +44,7 @@
         <if test='originTitle != null and originTitle != ""'>
             and title like concat('%', #{originTitle}, '%')
         </if>
+        order by upddt desc
     </select>
 
     <insert id="insertOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
