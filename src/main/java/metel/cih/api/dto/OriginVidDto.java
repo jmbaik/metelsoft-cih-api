@@ -8,6 +8,7 @@ public class OriginVidDto {
     private String originName;
     private String originTitle;
     private String channelUrl;
+    private String channelId;
     private String originComment;
     private String userId;
     private String updDt;

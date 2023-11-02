@@ -35,7 +35,7 @@
     </delete>
 
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
-        SELECT ovid, name as originName, title as originTitle, channelurl as channelUrl, comment as originComment,  upddt as updDt
+        SELECT ovid, name as originName, title as originTitle, channelurl as channelUrl, channelid as channelId, comment as originComment,  upddt as updDt
         FROM tb_origin_vid
         where 1=1
         <if test='originName != null and originName != ""'>
@@ -49,14 +49,14 @@
 
     <insert id="insertOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
         INSERT INTO tb_origin_vid
-        (ovid, name, title, channelurl, comment, regid, regdt, updid, upddt)
+        (ovid, name, title, channelurl, channelid, comment, regid, regdt, updid, upddt)
         select concat('R', lpad(cast(substring(ifnull(max(ovid), 'O000000'),2) as unsigned)+1, 6, '0')) as ovid
-            , #{originName}, #{originTitle}, #{channelUrl}, #{originComment}, #{userId}, now(), #{userId}, now()
+            , #{originName}, #{originTitle}, #{channelUrl}, #{channelId} #{originComment}, #{userId}, now(), #{userId}, now()
         from tb_origin_vid
     </insert>
     <update id="updateOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
         UPDATE tb_origin_vid
-        SET name=#{originName}, title=#{originTitle}, channelurl=#{channelUrl}, comment=#{originComment}, updid=#{userId}, upddt=now()
+        SET name=#{originName}, title=#{originTitle}, channelurl=#{channelUrl}, channelid = #{channelId}, comment=#{originComment}, updid=#{userId}, upddt=now()
         WHERE ovid=#{ovid}
     </update>
     <delete id="deleteOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
