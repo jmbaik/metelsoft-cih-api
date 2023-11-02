@@ -51,7 +51,7 @@
         INSERT INTO tb_origin_vid
         (ovid, name, title, channelurl, channelid, comment, regid, regdt, updid, upddt)
         select concat('R', lpad(cast(substring(ifnull(max(ovid), 'O000000'),2) as unsigned)+1, 6, '0')) as ovid
-            , #{originName}, #{originTitle}, #{channelUrl}, #{channelId} #{originComment}, #{userId}, now(), #{userId}, now()
+            , #{originName}, #{originTitle}, #{channelUrl}, #{channelId} , #{originComment}, #{userId}, now(), #{userId}, now()
         from tb_origin_vid
     </insert>
     <update id="updateOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
