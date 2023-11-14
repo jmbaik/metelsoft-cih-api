@@ -44,8 +44,13 @@ public class YoutubeController {
 
     @ResponseBody
     @PostMapping("/pastor")
-    public ResponseDto<Integer> insertYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
-        Integer result = service.insertYoutubePastor(youtubePastorDto);
+    public ResponseDto<Integer> mergeYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
+        int result = service.mergeYoutubePastor(youtubePastorDto);
+        OriginVidDto originVidDto = new OriginVidDto();
+        originVidDto.setChannelId(youtubePastorDto.getChannelId());
+        originVidDto.setChannelTitle(youtubePastorDto.getChannelTitle());
+        originVidDto.setUserId(youtubePastorDto.getUserId());
+        result += service.mergeOriginVid(originVidDto);
         return ApiResponse.Success(result);
     }
     @ResponseBody

@@ -13,7 +13,7 @@ public interface YoutubeMapper {
     List<YoutubePastorDto> selectYoutubePastor(HashMap<String, Object> map);
     List<OriginVidDto> selectOriginVid(HashMap<String, Object> map);
 
-    int insertYoutubePastor(YoutubePastorDto youtubePastorDto);
+    int mergeYoutubePastor(YoutubePastorDto youtubePastorDto);
 
     int updateYoutubePastor(YoutubePastorDto youtubePastorDto);
 

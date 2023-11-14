@@ -22,8 +22,8 @@ public class YoutubeService {
         return mapper.selectOriginVid(map);
     }
 
-    public int insertYoutubePastor(YoutubePastorDto youtubePastorDto){
-        return mapper.insertYoutubePastor(youtubePastorDto);
+    public int mergeYoutubePastor(YoutubePastorDto youtubePastorDto){
+        return mapper.mergeYoutubePastor(youtubePastorDto);
     }
     public int updateYoutubePastor(YoutubePastorDto youtubePastorDto){
         return mapper.updateYoutubePastor(youtubePastorDto);
