@@ -4,7 +4,6 @@ package metel.cih.api.youtube.controller;
 import lombok.RequiredArgsConstructor;
 import metel.cih.api.base.ApiResponse;
 import metel.cih.api.base.ResponseDto;
-import metel.cih.api.dto.ChurchCodeDto;
 import metel.cih.api.dto.OriginVidDto;
 import metel.cih.api.dto.YoutubePastorDto;
 import metel.cih.api.youtube.service.YoutubeService;
@@ -23,9 +22,9 @@ public class YoutubeController {
     @GetMapping("/pastor")
     public ResponseDto<List<YoutubePastorDto>> getChurchCode(
             @RequestParam(value="pastorCode", required = false) String pastorCode
-            ,@RequestParam(value="ovid", required = false) String ovid) {
+            ,@RequestParam(value="channelId", required = false) String channelId) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("ovid", ovid);
+        map.put("channelId", channelId);
         map.put("pastorCode", pastorCode);
         List<YoutubePastorDto> list = service.selectYoutubePastor(map);
         return ApiResponse.Success(list);
@@ -65,8 +64,8 @@ public class YoutubeController {
 
     @ResponseBody
     @PostMapping("/origin-vid")
-    public ResponseDto<Integer> insertOriginVid(@RequestBody OriginVidDto originVidDto){
-        Integer result = service.insertOriginVid(originVidDto);
+    public ResponseDto<Integer> mergeOriginVid(@RequestBody OriginVidDto originVidDto){
+        Integer result = service.mergeOriginVid(originVidDto);
         return ApiResponse.Success(result);
     }
 

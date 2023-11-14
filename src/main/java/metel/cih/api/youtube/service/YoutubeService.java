@@ -31,8 +31,8 @@ public class YoutubeService {
     public int deleteYoutubePastor(YoutubePastorDto youtubePastorDto){
         return mapper.deleteYoutubePastor(youtubePastorDto);
     }
-    public int insertOriginVid(OriginVidDto originVidDto){
-        return mapper.insertOriginVid(originVidDto);
+    public int mergeOriginVid(OriginVidDto originVidDto){
+        return mapper.mergeOriginVid(originVidDto);
     }
     public int updateOriginVid(OriginVidDto originVidDto){
         return mapper.updateOriginVid(originVidDto);

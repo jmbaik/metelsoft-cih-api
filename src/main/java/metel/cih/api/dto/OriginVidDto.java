@@ -4,12 +4,9 @@ import lombok.Data;
 
 @Data
 public class OriginVidDto {
-    private String ovid;
-    private String originName;
-    private String originTitle;
-    private String channelUrl;
     private String channelId;
-    private String originComment;
+    private String channelTitle;
+    private String channelDescription;
     private String userId;
     private String updDt;
 }

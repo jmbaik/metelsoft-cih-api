@@ -19,7 +19,7 @@ public interface YoutubeMapper {
 
     int deleteYoutubePastor(YoutubePastorDto youtubePastorDto);
 
-    int insertOriginVid(OriginVidDto originVidDto);
+    int mergeOriginVid(OriginVidDto originVidDto);
 
     int updateOriginVid(OriginVidDto originVidDto);
 
