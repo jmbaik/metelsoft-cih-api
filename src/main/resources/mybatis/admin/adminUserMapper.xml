@@ -3,9 +3,11 @@
 <mapper namespace="metel.cih.api.admin.mapper.AdminUserMapper">
 
     <select id="selectAdminLoginInfo" resultType="metel.cih.api.dto.AdminUserDto" parameterType="metel.cih.api.dto.AdminUserDto">
-        SELECT a.email, a.password, a.phone, a.name, a.user_id as userId, a.regdate as regDate, a.upddate as updDate
-            , a.c_code as cCode, a.admin_level as adminLevel, b.name as churchName, b.pic
-        FROM tb_admins a LEFT JOIN tb_church_code b on a.c_code = b.c_code
+        select a.uid, a.email, a.phone, a.password, a.admin_level as adminLevel
+            , a.c_code as churchCode, a.name, a.nickname as nickName, a.comment
+            , a.pic, a.token, b.name as churchName, b.pic as churchPic
+            , a.upddate as updDate
+        FROM tb_admins a LEFT OUTER JOIN tb_church_code b on a.c_code = b.c_code
         where 1=1
         <if test='email != null and email != ""'>
             and a.email = #{email}
