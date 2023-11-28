@@ -7,7 +7,7 @@
     </select>
 
     <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
-        SELECT c_code as churchCode, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt
+        SELECT c_code as churchCode, substr(c_code,1,1) as areaCode, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt
         FROM tb_church_code
         order by upd_dt desc
     </select>
