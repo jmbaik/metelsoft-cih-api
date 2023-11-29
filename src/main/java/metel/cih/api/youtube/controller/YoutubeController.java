@@ -21,11 +21,12 @@ public class YoutubeController {
     @ResponseBody
     @GetMapping("/pastor")
     public ResponseDto<List<YoutubePastorDto>> getChurchCode(
-            @RequestParam(value="pastorCode", required = false) String pastorCode
-            ,@RequestParam(value="channelId", required = false) String channelId) {
+            @RequestParam(value="options", required = false) String options
+            ,@RequestParam(value="keyword", required = false) String keyword) {
+        System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("channelId", channelId);
-        map.put("pastorCode", pastorCode);
+        map.put("options", options);
+        map.put("keyword", keyword);
         List<YoutubePastorDto> list = service.selectYoutubePastor(map);
         return ApiResponse.Success(list);
     }

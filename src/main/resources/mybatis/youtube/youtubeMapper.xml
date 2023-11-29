@@ -9,13 +9,19 @@
         FROM tb_youtube_pastor a inner join tb_origin_vid b on a.channel_id = b.channel_id
         inner join tb_pastor c on a.p_code = c.p_code
         where 1=1
-        <if test='pastorCode != null and pastorCode != ""'>
-            AND a.p_code = #{pastorCode}
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
-        <if test='channelId != null and channelId != ""'>
-            and a.channel_id = #{channelId}
+        <if test='options != null and options == "name"'>
+            AND c.name like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='channelId != null and channelId != "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
         </if>
         order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
     </select>
     <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
         INSERT INTO tb_youtube_pastor
@@ -39,7 +45,8 @@
     </delete>
 
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
-        SELECT channel_id as channelId, title as channelTitle, description as channelDescription, regid as userId, upddt as updDt
+        SELECT channel_id as channelId, title as channelTitle, description as channelDescription
+            , concat(substr(description,1, 100), '...') as shortDescription, regid as userId, updid as updId,  upddt as updDt
         FROM tb_origin_vid
         where 1=1
         <if test='channelTitle != null and channelTitle != ""'>
