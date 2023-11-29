@@ -15,7 +15,7 @@
         <if test='options != null and options == "name"'>
             AND c.name like concat('%', nullif(#{keyword}, ''), '%')
         </if>
-        <if test='channelId != null and channelId != "vid"'>
+        <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
         </if>
         order by a.upddt desc
