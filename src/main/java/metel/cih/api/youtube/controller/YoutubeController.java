@@ -62,7 +62,7 @@ public class YoutubeController {
     }
 
     @ResponseBody
-    @DeleteMapping("/pastor")
+    @PostMapping("/pastor-delete")
     public ResponseDto<Integer> deleteYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
         Integer result = service.deleteYoutubePastor(youtubePastorDto);
         return ApiResponse.Success(result);

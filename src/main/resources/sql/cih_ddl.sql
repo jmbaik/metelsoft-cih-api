@@ -95,5 +95,6 @@ CREATE TABLE `tb_youtube_pastor` (
   `regdt` datetime DEFAULT NULL COMMENT '등록일시',
   `updid` varchar(100) DEFAULT NULL COMMENT '수정자',
   `upddt` datetime NOT NULL DEFAULT current_timestamp() COMMENT '수정일시',
+  `del_yn` varchar(1) DEFAULT 'N',
   PRIMARY KEY (`vid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
