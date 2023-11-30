@@ -1,3 +1,19 @@
+select * from tb_admins;
+select * from tb_area_code;
+select * from tb_church_code;
+select * from tb_origin_vid;
+select * from tb_pastor;
+select * from tb_youtube_pastor;
+
+
+drop table tb_admins;
+drop table tb_area_code;
+drop table tb_church_code;
+drop table tb_origin_vid;
+drop table tb_pastor;
+drop table tb_youtube_pastor;
+
+commit;
 -- cihdb.tb_admins definition
 
 CREATE TABLE `tb_admins` (
