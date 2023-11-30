@@ -2,8 +2,7 @@ package metel.cih.api.youtube.service;
 
 
 import lombok.RequiredArgsConstructor;
-import metel.cih.api.dto.OriginVidDto;
-import metel.cih.api.dto.YoutubePastorDto;
+import metel.cih.api.dto.*;
 import metel.cih.api.youtube.mapper.YoutubeMapper;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +38,50 @@ public class YoutubeService {
     }
     public int deleteOriginVid(OriginVidDto originVidDto){
         return mapper.deleteOriginVid(originVidDto);
+    }
+
+    // youtube celeb part
+    public List<YoutubeCelebDto> selectYoutubeCeleb(HashMap<String, Object> map){
+        return mapper.selectYoutubeCeleb(map);
+    }
+    public int mergeYoutubeCeleb(YoutubeCelebDto youtubeCelebDto){
+        return mapper.mergeYoutubeCeleb(youtubeCelebDto);
+    }
+    public int deleteYoutubeCeleb(YoutubeCelebDto youtubeCelebDto){
+        return mapper.deleteYoutubeCeleb(youtubeCelebDto);
+    }
+
+    // youtube sermon part
+    public List<YoutubeSermonDto> selectYoutubeSermon(HashMap<String, Object> map){
+        return mapper.selectYoutubeSermon(map);
+    }
+    public int mergeYoutubeSermon(YoutubeSermonDto youtubeSermonDto){
+        return mapper.mergeYoutubeSermon(youtubeSermonDto);
+    }
+    public int deleteYoutubeSermon(YoutubeSermonDto youtubeSermonDto){
+        return mapper.deleteYoutubeSermon(youtubeSermonDto);
+    }
+
+    // youtube mercy part
+    public List<YoutubeMercyDto> selectYoutubeMercy(HashMap<String, Object> map){
+        return mapper.selectYoutubeMercy(map);
+    }
+    public int mergeYoutubeMercy(YoutubeMercyDto youtubeMercyDto){
+        return mapper.mergeYoutubeMercy(youtubeMercyDto);
+    }
+    public int deleteYoutubeMercy(YoutubeMercyDto youtubeMercyDto){
+        return mapper.deleteYoutubeMercy(youtubeMercyDto);
+    }
+
+    // youtube ccm part
+    public List<ShortsCcmDto> selectShortsCcm(HashMap<String, Object> map){
+        return mapper.selectShortsCcm(map);
+    }
+    public int mergeShortsCcm(ShortsCcmDto shortsCcmDto){
+        return mapper.mergeShortsCcm(shortsCcmDto);
+    }
+    public int deleteShortsCcm(ShortsCcmDto shortsCcmDto){
+        return mapper.deleteShortsCcm(shortsCcmDto);
     }
 
 }

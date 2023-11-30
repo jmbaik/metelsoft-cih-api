@@ -1,8 +1,7 @@
 package metel.cih.api.youtube.mapper;
 
 
-import metel.cih.api.dto.OriginVidDto;
-import metel.cih.api.dto.YoutubePastorDto;
+import metel.cih.api.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -25,5 +24,24 @@ public interface YoutubeMapper {
 
     int deleteOriginVid(OriginVidDto originVidDto);
 
+    //    youtube celeb part start
+    List<YoutubeCelebDto> selectYoutubeCeleb(HashMap<String, Object> map);
+    int mergeYoutubeCeleb(YoutubeCelebDto youtubeCelebDto);
+    int deleteYoutubeCeleb(YoutubeCelebDto youtubeCelebDto);
+
+    // youtube sermon part start
+    List<YoutubeSermonDto> selectYoutubeSermon(HashMap<String, Object> map);
+    int mergeYoutubeSermon(YoutubeSermonDto youtubeSermonDto);
+    int deleteYoutubeSermon(YoutubeSermonDto youtubeSermonDto);
+
+    // youtube mery part start
+    List<YoutubeMercyDto> selectYoutubeMercy(HashMap<String, Object> map);
+    int mergeYoutubeMercy(YoutubeMercyDto youtubeMercyDto);
+    int deleteYoutubeMercy(YoutubeMercyDto youtubeMercyDto);
+
+    // youtube ccm part start
+    List<ShortsCcmDto> selectShortsCcm(HashMap<String, Object> map);
+    int mergeShortsCcm(ShortsCcmDto shortsCcmDto);
+    int deleteShortsCcm(ShortsCcmDto shortsCcmDto);
 
 }
