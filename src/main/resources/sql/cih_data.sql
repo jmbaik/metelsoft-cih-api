@@ -1,3 +1,24 @@
+INSERT INTO cihdb.tb_area_code (a_code,name,alias_code) VALUES
+	 ('02','서울','A'),
+	 ('031','경기','B'),
+	 ('032','인천','C'),
+	 ('033','강원','D'),
+	 ('041','충남','E'),
+	 ('042','대전','F'),
+	 ('043','충북','G'),
+	 ('051','부산','H'),
+	 ('052','울산','I'),
+	 ('053','대구','J');
+INSERT INTO cihdb.tb_area_code (a_code,name,alias_code) VALUES
+	 ('054','경북','K'),
+	 ('055','경남','L'),
+	 ('061','전남','M'),
+	 ('062','광주','N'),
+	 ('063','전북','O'),
+	 ('064','제주','P');
+
+
+
 INSERT INTO cihdb.tb_admins
 (uid, email, phone, password, admin_level, c_code, name, nickname, comment, pic, token, regid, regdate, updid, upddate)
 VALUES('u0001', 'famian@daum.net', '01048515568', '1234', 'S', NULL, '백종민', '', NULL, NULL, NULL, 'admin', '2023-11-25 21:59:27.000', 'admin', '2023-11-25 21:59:27.000');

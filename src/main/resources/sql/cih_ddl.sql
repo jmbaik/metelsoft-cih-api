@@ -1,3 +1,15 @@
+drop table tb_admins;
+drop table tb_area_code;
+drop table tb_church_code;
+drop table tb_origin_vid;
+drop table tb_pastor;
+drop table tb_shorts_ccm;
+drop table tb_youtube_celeb;
+drop table tb_youtube_mercy;
+drop table tb_youtube_pastor;
+drop table tb_youtube_sermon;
+
+
 -- cihdb.tb_admins definition
 
 CREATE TABLE `tb_admins` (
