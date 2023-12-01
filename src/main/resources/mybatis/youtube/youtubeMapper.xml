@@ -3,13 +3,16 @@
 <mapper namespace="metel.cih.api.youtube.mapper.YoutubeMapper">
 
     <!-- youtube Mercy part -->
-    <select id="selectShortsCcm" resultType="metel.cih.api.dto.ShortsCcmDto" parameterType="hashmap">
+    <select id="selectShortsCcm" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
-        , b.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
         , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
         FROM tb_shorts_ccm a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
         <if test='options != null and options == "title"'>
             AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
@@ -21,7 +24,7 @@
             LIMIT 50
         </if>
     </select>
-    <update id="mergeShortsCcm" parameterType="metel.cih.api.dto.ShortsCcmDto">
+    <update id="mergeShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_shorts_ccm
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
@@ -30,19 +33,22 @@
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
-    <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.ShortsCcmDto">
+    <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_shorts_ccm set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
     <!--    end youtube Mercy part -->
 
     <!-- youtube Mercy part -->
-    <select id="selectYoutubeMercy" resultType="metel.cih.api.dto.YoutubeMercyDto" parameterType="hashmap">
+    <select id="selectYoutubeMercy" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
-        , b.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
         , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
         FROM tb_youtube_mercy a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
         <if test='options != null and options == "title"'>
             AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
@@ -54,7 +60,7 @@
             LIMIT 50
         </if>
     </select>
-    <update id="mergeYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeMercyDto">
+    <update id="mergeYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_mercy
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
@@ -63,19 +69,22 @@
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
-    <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeMercyDto">
+    <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_mercy set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
     <!--    end youtube Mercy part -->
 
     <!-- youtube sermon part -->
-    <select id="selectYoutubeSermon" resultType="metel.cih.api.dto.YoutubeSermonDto" parameterType="hashmap">
+    <select id="selectYoutubeSermon" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
-        , b.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
         , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
         FROM tb_youtube_sermon a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
         <if test='options != null and options == "title"'>
             AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
@@ -87,7 +96,7 @@
             LIMIT 50
         </if>
     </select>
-    <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeSermonDto">
+    <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_sermon
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
@@ -96,19 +105,22 @@
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
-    <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeSermonDto">
+    <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_sermon set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
     <!--    end youtube sermon part -->
 
     <!-- youtube celeb part -->
-    <select id="selectYoutubeCeleb" resultType="metel.cih.api.dto.YoutubeCelebDto" parameterType="hashmap">
+    <select id="selectYoutubeCeleb" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
-        , b.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
         , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
         FROM tb_youtube_celeb a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
         <if test='options != null and options == "title"'>
             AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
@@ -120,7 +132,7 @@
             LIMIT 50
         </if>
     </select>
-    <update id="mergeYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeCelebDto">
+    <update id="mergeYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_celeb
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
@@ -129,19 +141,22 @@
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
-    <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeCelebDto">
+    <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_celeb set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
     <!--    end youtube celeb part -->
 
-    <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubePastorDto" parameterType="hashmap">
+    <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd, a.grade, a.sort
-            , b.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+            , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
             , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
         FROM tb_youtube_pastor a inner join tb_origin_vid b on a.channel_id = b.channel_id
         inner join tb_pastor c on a.p_code = c.p_code
         where 1=1
         and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
         <if test='options != null and options == "title"'>
             AND a.title like concat('%', nullif(#{keyword}, ''), '%')
         </if>
@@ -156,7 +171,7 @@
             LIMIT 50
         </if>
     </select>
-    <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
+    <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_pastor
         (vid, p_code, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
             , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
@@ -165,7 +180,7 @@
         ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}
             , updid=#{userId}, upddt=current_timestamp()
     </insert>
-    <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
+    <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         UPDATE tb_youtube_pastor
         SET p_code=#{pastorCode}, channel_id=#{channelId}, title=#{title}
             , channel_title=#{channelTitle}, thumbnail_d=#{thumbnailDefault}, thumbnail_m=#{thumbnailMedium}, thumbnail_h=#{thumbnailHigh}
@@ -173,19 +188,20 @@
             , updid=#{userId}, upddt=current_timestamp()
         WHERE vid=#{vid}
     </update>
-    <update id="deleteYoutubePastor" parameterType="metel.cih.api.dto.YoutubePastorDto">
+    <update id="deleteYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_pastor set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
 
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
-        SELECT channel_id as channelId, title as channelTitle, description as channelDescription
-            , concat(substr(description,1, 100), '...') as shortDescription, regid as userId, updid as updId,  upddt as updDt
-        FROM tb_origin_vid
+        SELECT a.channel_id as channelId, a.title as channelTitle, a.description as channelDescription
+            , concat(substr(a.description,1, 100), '...') as shortDescription, a.regid as userId, a.updid as updId,  a.upddt as updDt
+            , (select count(0) from tb_youtube_pastor b where b.channel_id = a.channel_id) as itemsCount
+        FROM tb_origin_vid a
         where 1=1
         <if test='channelTitle != null and channelTitle != ""'>
-            and title like concat('%', #{channelTitle}, '%')
+            and a.title like concat('%', #{channelTitle}, '%')
         </if>
-        order by upddt desc
+        order by a.upddt desc
     </select>
 
     <insert id="mergeOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">

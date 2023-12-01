@@ -3,9 +3,11 @@ package metel.cih.api.dto;
 import lombok.Data;
 
 @Data
-public class YoutubeSermonDto {
+public class YoutubeVideoDto {
 
     private String vid;
+    private String pastorCode;
+    private String pastorName;
     private String channelId;
     private String title;
     private String channelTitle;
@@ -19,5 +21,4 @@ public class YoutubeSermonDto {
     private String publishedAt;
     private String userId;
     private String updDt;
-
 }

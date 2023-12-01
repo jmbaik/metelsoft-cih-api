@@ -9,14 +9,14 @@ import java.util.List;
 
 @Mapper
 public interface YoutubeMapper {
-    List<YoutubePastorDto> selectYoutubePastor(HashMap<String, Object> map);
+    List<YoutubeVideoDto> selectYoutubePastor(HashMap<String, Object> map);
     List<OriginVidDto> selectOriginVid(HashMap<String, Object> map);
 
-    int mergeYoutubePastor(YoutubePastorDto youtubePastorDto);
+    int mergeYoutubePastor(YoutubeVideoDto youtubePastorDto);
 
-    int updateYoutubePastor(YoutubePastorDto youtubePastorDto);
+    int updateYoutubePastor(YoutubeVideoDto youtubePastorDto);
 
-    int deleteYoutubePastor(YoutubePastorDto youtubePastorDto);
+    int deleteYoutubePastor(YoutubeVideoDto youtubePastorDto);
 
     int mergeOriginVid(OriginVidDto originVidDto);
 
@@ -25,23 +25,23 @@ public interface YoutubeMapper {
     int deleteOriginVid(OriginVidDto originVidDto);
 
     //    youtube celeb part start
-    List<YoutubeCelebDto> selectYoutubeCeleb(HashMap<String, Object> map);
-    int mergeYoutubeCeleb(YoutubeCelebDto youtubeCelebDto);
-    int deleteYoutubeCeleb(YoutubeCelebDto youtubeCelebDto);
+    List<YoutubeVideoDto> selectYoutubeCeleb(HashMap<String, Object> map);
+    int mergeYoutubeCeleb(YoutubeVideoDto youtubeCelebDto);
+    int deleteYoutubeCeleb(YoutubeVideoDto youtubeCelebDto);
 
     // youtube sermon part start
-    List<YoutubeSermonDto> selectYoutubeSermon(HashMap<String, Object> map);
-    int mergeYoutubeSermon(YoutubeSermonDto youtubeSermonDto);
-    int deleteYoutubeSermon(YoutubeSermonDto youtubeSermonDto);
+    List<YoutubeVideoDto> selectYoutubeSermon(HashMap<String, Object> map);
+    int mergeYoutubeSermon(YoutubeVideoDto youtubeSermonDto);
+    int deleteYoutubeSermon(YoutubeVideoDto youtubeSermonDto);
 
     // youtube mery part start
-    List<YoutubeMercyDto> selectYoutubeMercy(HashMap<String, Object> map);
-    int mergeYoutubeMercy(YoutubeMercyDto youtubeMercyDto);
-    int deleteYoutubeMercy(YoutubeMercyDto youtubeMercyDto);
+    List<YoutubeVideoDto> selectYoutubeMercy(HashMap<String, Object> map);
+    int mergeYoutubeMercy(YoutubeVideoDto youtubeMercyDto);
+    int deleteYoutubeMercy(YoutubeVideoDto youtubeMercyDto);
 
     // youtube ccm part start
-    List<ShortsCcmDto> selectShortsCcm(HashMap<String, Object> map);
-    int mergeShortsCcm(ShortsCcmDto shortsCcmDto);
-    int deleteShortsCcm(ShortsCcmDto shortsCcmDto);
+    List<YoutubeVideoDto> selectShortsCcm(HashMap<String, Object> map);
+    int mergeShortsCcm(YoutubeVideoDto shortsCcmDto);
+    int deleteShortsCcm(YoutubeVideoDto shortsCcmDto);
 
 }

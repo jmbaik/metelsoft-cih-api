@@ -11,4 +11,5 @@ public class OriginVidDto {
     private String userId;
     private String updId;
     private String updDt;
+    private String itemsCount;
 }

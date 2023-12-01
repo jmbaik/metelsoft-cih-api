@@ -14,20 +14,20 @@ import java.util.List;
 public class YoutubeService {
     private final YoutubeMapper mapper;
 
-    public List<YoutubePastorDto> selectYoutubePastor(HashMap<String, Object> map){
+    public List<YoutubeVideoDto> selectYoutubePastor(HashMap<String, Object> map){
         return mapper.selectYoutubePastor(map);
     }
     public List<OriginVidDto> selectOriginVid(HashMap<String, Object> map){
         return mapper.selectOriginVid(map);
     }
 
-    public int mergeYoutubePastor(YoutubePastorDto youtubePastorDto){
+    public int mergeYoutubePastor(YoutubeVideoDto youtubePastorDto){
         return mapper.mergeYoutubePastor(youtubePastorDto);
     }
-    public int updateYoutubePastor(YoutubePastorDto youtubePastorDto){
+    public int updateYoutubePastor(YoutubeVideoDto youtubePastorDto){
         return mapper.updateYoutubePastor(youtubePastorDto);
     }
-    public int deleteYoutubePastor(YoutubePastorDto youtubePastorDto){
+    public int deleteYoutubePastor(YoutubeVideoDto youtubePastorDto){
         return mapper.deleteYoutubePastor(youtubePastorDto);
     }
     public int mergeOriginVid(OriginVidDto originVidDto){
@@ -41,46 +41,46 @@ public class YoutubeService {
     }
 
     // youtube celeb part
-    public List<YoutubeCelebDto> selectYoutubeCeleb(HashMap<String, Object> map){
+    public List<YoutubeVideoDto> selectYoutubeCeleb(HashMap<String, Object> map){
         return mapper.selectYoutubeCeleb(map);
     }
-    public int mergeYoutubeCeleb(YoutubeCelebDto youtubeCelebDto){
+    public int mergeYoutubeCeleb(YoutubeVideoDto youtubeCelebDto){
         return mapper.mergeYoutubeCeleb(youtubeCelebDto);
     }
-    public int deleteYoutubeCeleb(YoutubeCelebDto youtubeCelebDto){
+    public int deleteYoutubeCeleb(YoutubeVideoDto youtubeCelebDto){
         return mapper.deleteYoutubeCeleb(youtubeCelebDto);
     }
 
     // youtube sermon part
-    public List<YoutubeSermonDto> selectYoutubeSermon(HashMap<String, Object> map){
+    public List<YoutubeVideoDto> selectYoutubeSermon(HashMap<String, Object> map){
         return mapper.selectYoutubeSermon(map);
     }
-    public int mergeYoutubeSermon(YoutubeSermonDto youtubeSermonDto){
+    public int mergeYoutubeSermon(YoutubeVideoDto youtubeSermonDto){
         return mapper.mergeYoutubeSermon(youtubeSermonDto);
     }
-    public int deleteYoutubeSermon(YoutubeSermonDto youtubeSermonDto){
+    public int deleteYoutubeSermon(YoutubeVideoDto youtubeSermonDto){
         return mapper.deleteYoutubeSermon(youtubeSermonDto);
     }
 
     // youtube mercy part
-    public List<YoutubeMercyDto> selectYoutubeMercy(HashMap<String, Object> map){
+    public List<YoutubeVideoDto> selectYoutubeMercy(HashMap<String, Object> map){
         return mapper.selectYoutubeMercy(map);
     }
-    public int mergeYoutubeMercy(YoutubeMercyDto youtubeMercyDto){
+    public int mergeYoutubeMercy(YoutubeVideoDto youtubeMercyDto){
         return mapper.mergeYoutubeMercy(youtubeMercyDto);
     }
-    public int deleteYoutubeMercy(YoutubeMercyDto youtubeMercyDto){
+    public int deleteYoutubeMercy(YoutubeVideoDto youtubeMercyDto){
         return mapper.deleteYoutubeMercy(youtubeMercyDto);
     }
 
     // youtube ccm part
-    public List<ShortsCcmDto> selectShortsCcm(HashMap<String, Object> map){
+    public List<YoutubeVideoDto> selectShortsCcm(HashMap<String, Object> map){
         return mapper.selectShortsCcm(map);
     }
-    public int mergeShortsCcm(ShortsCcmDto shortsCcmDto){
+    public int mergeShortsCcm(YoutubeVideoDto shortsCcmDto){
         return mapper.mergeShortsCcm(shortsCcmDto);
     }
-    public int deleteShortsCcm(ShortsCcmDto shortsCcmDto){
+    public int deleteShortsCcm(YoutubeVideoDto shortsCcmDto){
         return mapper.deleteShortsCcm(shortsCcmDto);
     }
 

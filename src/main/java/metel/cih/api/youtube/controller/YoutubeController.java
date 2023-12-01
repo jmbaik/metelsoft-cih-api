@@ -20,19 +20,19 @@ public class YoutubeController {
     // shorts ccm part
     @ResponseBody
     @GetMapping("/ccm")
-    public ResponseDto<List<ShortsCcmDto>> getShortsCcm(
+    public ResponseDto<List<YoutubeVideoDto>> getShortsCcm(
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
-        List<ShortsCcmDto> list = service.selectShortsCcm(map);
+        List<YoutubeVideoDto> list = service.selectShortsCcm(map);
         return ApiResponse.Success(list);
     }
     @ResponseBody
     @PostMapping("/ccm")
-    public ResponseDto<Integer> mergeShortsCcm(@RequestBody ShortsCcmDto shortsCcmDto){
+    public ResponseDto<Integer> mergeShortsCcm(@RequestBody YoutubeVideoDto shortsCcmDto){
         int result = service.mergeShortsCcm(shortsCcmDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(shortsCcmDto.getChannelId());
@@ -43,7 +43,7 @@ public class YoutubeController {
     }
     @ResponseBody
     @PostMapping("/ccm-delete")
-    public ResponseDto<Integer> deleteShortsCcm(@RequestBody ShortsCcmDto shortsCcmDto){
+    public ResponseDto<Integer> deleteShortsCcm(@RequestBody YoutubeVideoDto shortsCcmDto){
         Integer result = service.deleteShortsCcm(shortsCcmDto);
         return ApiResponse.Success(result);
     }
@@ -51,19 +51,19 @@ public class YoutubeController {
     //youtube mercy part
     @ResponseBody
     @GetMapping("/mercy")
-    public ResponseDto<List<YoutubeMercyDto>> getYoutubeMercy(
+    public ResponseDto<List<YoutubeVideoDto>> getYoutubeMercy(
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
-        List<YoutubeMercyDto> list = service.selectYoutubeMercy(map);
+        List<YoutubeVideoDto> list = service.selectYoutubeMercy(map);
         return ApiResponse.Success(list);
     }
     @ResponseBody
     @PostMapping("/mercy")
-    public ResponseDto<Integer> mergeYoutubeMercy(@RequestBody YoutubeMercyDto youtubeMercyDto){
+    public ResponseDto<Integer> mergeYoutubeMercy(@RequestBody YoutubeVideoDto youtubeMercyDto){
         int result = service.mergeYoutubeMercy(youtubeMercyDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeMercyDto.getChannelId());
@@ -74,7 +74,7 @@ public class YoutubeController {
     }
     @ResponseBody
     @PostMapping("/mercy-delete")
-    public ResponseDto<Integer> deleteYoutubeMercy(@RequestBody YoutubeMercyDto youtubeMercyDto){
+    public ResponseDto<Integer> deleteYoutubeMercy(@RequestBody YoutubeVideoDto youtubeMercyDto){
         Integer result = service.deleteYoutubeMercy(youtubeMercyDto);
         return ApiResponse.Success(result);
     }
@@ -82,19 +82,19 @@ public class YoutubeController {
     // youtube sermon part
     @ResponseBody
     @GetMapping("/sermon")
-    public ResponseDto<List<YoutubeSermonDto>> getYoutubeSermon(
+    public ResponseDto<List<YoutubeVideoDto>> getYoutubeSermon(
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
-        List<YoutubeSermonDto> list = service.selectYoutubeSermon(map);
+        List<YoutubeVideoDto> list = service.selectYoutubeSermon(map);
         return ApiResponse.Success(list);
     }
     @ResponseBody
     @PostMapping("/sermon")
-    public ResponseDto<Integer> mergeYoutubeSermon(@RequestBody YoutubeSermonDto youtubeSermonDto){
+    public ResponseDto<Integer> mergeYoutubeSermon(@RequestBody YoutubeVideoDto youtubeSermonDto){
         int result = service.mergeYoutubeSermon(youtubeSermonDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeSermonDto.getChannelId());
@@ -105,7 +105,7 @@ public class YoutubeController {
     }
     @ResponseBody
     @PostMapping("/sermon-delete")
-    public ResponseDto<Integer> deleteYoutubeSermon(@RequestBody YoutubeSermonDto youtubeSermonDto){
+    public ResponseDto<Integer> deleteYoutubeSermon(@RequestBody YoutubeVideoDto youtubeSermonDto){
         Integer result = service.deleteYoutubeSermon(youtubeSermonDto);
         return ApiResponse.Success(result);
     }
@@ -113,19 +113,19 @@ public class YoutubeController {
     // youtube celeb part
     @ResponseBody
     @GetMapping("/celeb")
-    public ResponseDto<List<YoutubeCelebDto>> getYoutubeCeleb(
+    public ResponseDto<List<YoutubeVideoDto>> getYoutubeCeleb(
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
-        List<YoutubeCelebDto> list = service.selectYoutubeCeleb(map);
+        List<YoutubeVideoDto> list = service.selectYoutubeCeleb(map);
         return ApiResponse.Success(list);
     }
     @ResponseBody
     @PostMapping("/celeb")
-    public ResponseDto<Integer> mergeYoutubeCeleb(@RequestBody YoutubeCelebDto youtubeCelebDto){
+    public ResponseDto<Integer> mergeYoutubeCeleb(@RequestBody YoutubeVideoDto youtubeCelebDto){
         int result = service.mergeYoutubeCeleb(youtubeCelebDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeCelebDto.getChannelId());
@@ -136,26 +136,26 @@ public class YoutubeController {
     }
     @ResponseBody
     @PostMapping("/celeb-delete")
-    public ResponseDto<Integer> deleteYoutubeCeleb(@RequestBody YoutubeCelebDto youtubeCelebDto){
+    public ResponseDto<Integer> deleteYoutubeCeleb(@RequestBody YoutubeVideoDto youtubeCelebDto){
         Integer result = service.deleteYoutubeCeleb(youtubeCelebDto);
         return ApiResponse.Success(result);
     }
 
     @ResponseBody
     @GetMapping("/pastor")
-    public ResponseDto<List<YoutubePastorDto>> getYoutubePastor(
+    public ResponseDto<List<YoutubeVideoDto>> getYoutubePastor(
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
-        List<YoutubePastorDto> list = service.selectYoutubePastor(map);
+        List<YoutubeVideoDto> list = service.selectYoutubePastor(map);
         return ApiResponse.Success(list);
     }
     @ResponseBody
     @PostMapping("/pastor")
-    public ResponseDto<Integer> mergeYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
+    public ResponseDto<Integer> mergeYoutubePastor(@RequestBody YoutubeVideoDto youtubePastorDto){
         int result = service.mergeYoutubePastor(youtubePastorDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubePastorDto.getChannelId());
@@ -166,14 +166,14 @@ public class YoutubeController {
     }
     @ResponseBody
     @PutMapping("/pastor")
-    public ResponseDto<Integer> updateYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
+    public ResponseDto<Integer> updateYoutubePastor(@RequestBody YoutubeVideoDto youtubePastorDto){
         Integer result = service.updateYoutubePastor(youtubePastorDto);
         return ApiResponse.Success(result);
     }
 
     @ResponseBody
     @PostMapping("/pastor-delete")
-    public ResponseDto<Integer> deleteYoutubePastor(@RequestBody YoutubePastorDto youtubePastorDto){
+    public ResponseDto<Integer> deleteYoutubePastor(@RequestBody YoutubeVideoDto youtubePastorDto){
         Integer result = service.deleteYoutubePastor(youtubePastorDto);
         return ApiResponse.Success(result);
     }
