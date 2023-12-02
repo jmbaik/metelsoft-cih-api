@@ -10,9 +10,15 @@ import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.SearchListResponse;
 import lombok.extern.slf4j.Slf4j;
+import metel.cih.api.dto.YoutubeVideoDto;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Slf4j
@@ -28,7 +34,8 @@ public class YoutubeDataApiService {
     /** Global instance of the max number of videos we want returned (50 = upper limit per page). */
     private static final long NUMBER_OF_VIDEOS_RETURNED = 50;
     /** Global instance of Youtube object to make all API requests. */
-    private static final String YOUTUBE_API_KEY = "AIzaSyCU6n82YBGi7Q3cFPScwqUtPI4q3-oxDXc";
+//    private static final String YOUTUBE_API_KEY = "AIzaSyCU6n82YBGi7Q3cFPScwqUtPI4q3-oxDXc";
+    private static final String YOUTUBE_API_KEY = "AIzaSyBiLtIN06CXDJ_fsp6mEe0njdZ_tfUbBsU";
 
     public static YouTube getService() throws IOException{
         return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
@@ -44,13 +51,64 @@ public class YoutubeDataApiService {
              * the interface and provide a no-op function.
              */
            YouTube youtubeService = getService();
-            YouTube.Channels.List request = youtubeService.channels()
+           YouTube.Channels.List request = youtubeService.channels()
                     .list("snippet,contentDetails,statistics");
             // ChannelListResponse response = request.setId("UC_x5XG1OV2P6uZZ5FSM9Ttw").execute();
-            ChannelListResponse response = request.setId(channelId).execute();
+            ChannelListResponse response = request.setId(channelId).setKey(YOUTUBE_API_KEY)
+                    .setMaxResults(NUMBER_OF_VIDEOS_RETURNED).execute();
             System.out.println(response);
             return response;
         } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            log.debug(t.getMessage());
+        }
+        return null;
+    }
+
+    public PlaylistItemListResponse getPlayListItems(String playListId, String nextPageToken, String prevPageToken){
+        try{
+            YouTube youtubeService = getService();
+            YouTube.PlaylistItems.List request = youtubeService.playlistItems().list("snippet,contentDetails,status")
+                .setPlaylistId(playListId).setKey(YOUTUBE_API_KEY).setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+            if(nextPageToken != null && !nextPageToken.isEmpty()){
+                request.setPageToken(nextPageToken);
+            }
+            if(prevPageToken != null && !prevPageToken.isEmpty()){
+                request.setPageToken(prevPageToken);
+            }
+            return request.execute();
+        }catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            log.debug(t.getMessage());
+        }
+        return null;
+    }
+
+    public SearchListResponse getVideosBySearch(String channelId, String q, String nextPageToken, String prevPageToken){
+        try{
+            YouTube youtubeService = getService();
+            YouTube.Search.List request = youtubeService.search().list("snippet")
+                    .setChannelId(channelId)
+                    .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
+                    .setOrder("relevance")
+                    .setQ("\"+q+\"")
+                    .setType("video");
+            if(nextPageToken != null && !nextPageToken.isEmpty()){
+                request.setPageToken(nextPageToken);
+            }
+            if(prevPageToken != null && !prevPageToken.isEmpty()){
+                request.setPageToken(prevPageToken);
+            }
+            return request.execute();
+        }catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
         } catch (IOException e) {
