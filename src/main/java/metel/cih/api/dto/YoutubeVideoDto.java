@@ -19,6 +19,10 @@ public class YoutubeVideoDto {
     private String description;
     private String createYmd;
     private String publishedAt;
+    private String prevPageToken;
+    private String nextPageToken;
+    private int totalResults;
+    private int itemNo;
     private String userId;
     private String updDt;
 }

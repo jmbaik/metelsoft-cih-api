@@ -1,11 +1,15 @@
 package metel.cih.api.youtube.controller;
 
+import com.google.api.services.youtube.model.Channel;
+import com.google.api.services.youtube.model.ChannelListResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import metel.cih.api.base.ApiResponse;
 import metel.cih.api.base.ResponseDto;
-import metel.cih.api.dto.OriginVidDto;
 import metel.cih.api.dto.YoutubePlayListDto;
+import metel.cih.api.dto.YoutubeRequestDto;
 import metel.cih.api.dto.YoutubeVideoDto;
+import metel.cih.api.youtube.service.YoutubeDataApiService;
 import metel.cih.api.youtube.service.YoutubeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +17,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("youtube-data")
 @RequiredArgsConstructor
-public class YoutubeDataAggController {
+public class YoutubeDataApiController {
     private final YoutubeService service;
+    private final YoutubeDataApiService youtubeDataApiService;
+
+    @ResponseBody
+    @PostMapping("/save-videos-by-channel")
+    public ResponseDto<List<YoutubeVideoDto>> saveVideosByChannel(@RequestBody YoutubeRequestDto dto){
+        List<YoutubeVideoDto> result = new ArrayList<>();
+        String category = dto.getCategory();
+        String channelId = dto.getChannelId();
+        String pastorCode = dto.getPastorCode();
+        ChannelListResponse channelListResponse = youtubeDataApiService.getPlayListByChannelId(channelId);
+        List<Channel> channels = channelListResponse.getItems();
+        for(Channel channel : channels){
+            log.debug(channel.getContentDetails().getRelatedPlaylists().getUploads());
+        }
+        return ApiResponse.Success(result);
+    }
 
     @ResponseBody
     @PostMapping("/save-playlist")
