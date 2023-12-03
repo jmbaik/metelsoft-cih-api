@@ -10412,3 +10412,30 @@ org.apache.ibatis.reflection.ReflectionException: There is no getter for propert
 2023-12-04 00:18:02.816 DEBUG 22888 --- [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
 2023-12-04 00:18:02.821 DEBUG 22888 --- [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [ResponseDto(code=Success, message=Success, result=[PastorDto(pastorCode=P000006, churchCode=B0002, c (truncated)...]
 2023-12-04 00:18:02.822 DEBUG 22888 --- [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-12-04 00:45:10.474  INFO 21488 --- [restartedMain] m.c.api.MetelChurchInHandApiApplication  : Starting MetelChurchInHandApiApplication using Java 17.0.9 on METEL-DEV with PID 21488 (D:\Metel\damasone\cih\backend\metelsoft-cih-api\build\classes\java\main started by damas in D:\Metel\damasone\cih\backend\metelsoft-cih-api)
+2023-12-04 00:45:10.474 DEBUG 21488 --- [restartedMain] m.c.api.MetelChurchInHandApiApplication  : Running with Spring Boot v2.7.10, Spring v5.3.26
+2023-12-04 00:45:10.475  INFO 21488 --- [restartedMain] m.c.api.MetelChurchInHandApiApplication  : The following 1 profile is active: "dev"
+2023-12-04 00:45:10.520  INFO 21488 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-04 00:45:10.520  INFO 21488 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-04 00:45:11.011  INFO 21488 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-04 00:45:11.023  INFO 21488 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2023-12-04 00:45:11.496  INFO 21488 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-12-04 00:45:11.505  INFO 21488 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-04 00:45:11.505  INFO 21488 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.73]
+2023-12-04 00:45:11.558  INFO 21488 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2023-12-04 00:45:11.559  INFO 21488 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1039 ms
+2023-12-04 00:45:12.066 DEBUG 21488 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 45 mappings in 'requestMappingHandlerMapping'
+2023-12-04 00:45:12.112  INFO 21488 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-12-04 00:45:12.203  INFO 21488 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-04 00:45:12.206 DEBUG 21488 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-12-04 00:45:12.245 DEBUG 21488 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2023-12-04 00:45:12.251 DEBUG 21488 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-12-04 00:45:12.285  INFO 21488 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-12-04 00:45:12.413  INFO 21488 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-12-04 00:45:12.520  INFO 21488 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2023-12-04 00:45:12.521  INFO 21488 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-12-04 00:45:12.539  INFO 21488 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-12-04 00:45:12.565  INFO 21488 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-12-04 00:45:12.686  INFO 21488 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getAreaCodeUsingGET_1
+2023-12-04 00:45:12.697  INFO 21488 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getVideoClipsUsingGET_1
+2023-12-04 00:45:12.759  INFO 21488 --- [restartedMain] m.c.api.MetelChurchInHandApiApplication  : Started MetelChurchInHandApiApplication in 2.561 seconds (JVM running for 2.934)

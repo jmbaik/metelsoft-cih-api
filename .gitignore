@@ -35,5 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
-/logs/spring.log
-/logs/spring.log.2023-12-02.0.gz
+/logs/spring.log*
