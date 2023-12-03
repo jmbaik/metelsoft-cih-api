@@ -6,6 +6,8 @@ import java.util.List;
 
 @Data
 public class YoutubeResponseDto {
+    private String result;
+    private String message;
     private String channelId;
     private String category;
     private String prevPageToken;

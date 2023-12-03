@@ -14,4 +14,6 @@ public class YoutubeRequestDto {
     private String prevPageToken;
     private String nextPageToken;
     private int lastItemNo =0;
+
+    private List<YoutubeVideoDto> Videos;
 }

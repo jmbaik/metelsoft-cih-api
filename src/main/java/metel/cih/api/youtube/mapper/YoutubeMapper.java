@@ -17,6 +17,7 @@ public interface YoutubeMapper {
     int updateYoutubePastor(YoutubeVideoDto youtubePastorDto);
 
     int deleteYoutubePastor(YoutubeVideoDto youtubePastorDto);
+    int deleteRealDataYoutubePastor(YoutubeVideoDto youtubePastorDto);
 
     int mergeOriginVid(OriginVidDto originVidDto);
 
@@ -28,20 +29,27 @@ public interface YoutubeMapper {
     List<YoutubeVideoDto> selectYoutubeCeleb(HashMap<String, Object> map);
     int mergeYoutubeCeleb(YoutubeVideoDto youtubeCelebDto);
     int deleteYoutubeCeleb(YoutubeVideoDto youtubeCelebDto);
+    int deleteRealDataYoutubeCeleb(YoutubeVideoDto youtubeCelebDto);
 
     // youtube sermon part start
     List<YoutubeVideoDto> selectYoutubeSermon(HashMap<String, Object> map);
     int mergeYoutubeSermon(YoutubeVideoDto youtubeSermonDto);
     int deleteYoutubeSermon(YoutubeVideoDto youtubeSermonDto);
+    int deleteRealDataYoutubeSermon(YoutubeVideoDto youtubeSermonDto);
 
     // youtube mery part start
     List<YoutubeVideoDto> selectYoutubeMercy(HashMap<String, Object> map);
     int mergeYoutubeMercy(YoutubeVideoDto youtubeMercyDto);
     int deleteYoutubeMercy(YoutubeVideoDto youtubeMercyDto);
+    int deleteRealDataYoutubeMercy(YoutubeVideoDto youtubeMercyDto);
 
     // youtube ccm part start
     List<YoutubeVideoDto> selectShortsCcm(HashMap<String, Object> map);
     int mergeShortsCcm(YoutubeVideoDto shortsCcmDto);
     int deleteShortsCcm(YoutubeVideoDto shortsCcmDto);
+    int deleteRealDataShortsCcm(YoutubeVideoDto shortsCcmDto);
+
+    int countYoutubeDataExists(YoutubeRequestDto youtubeRequestDto);
+
 
 }
