@@ -102,8 +102,8 @@ public class YoutubeDataApiService {
                     .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
                     .setOrder("title")
                     .setQ(q)
-//                    .setPublishedAfter(DateTime.parseRfc3339("2023-01-01T00:00:00Z"))
                     .setType("video");
+//                    .setPublishedAfter(DateTime.parseRfc3339("2023-01-01T00:00:00Z"))
             if(nextPageToken != null && !nextPageToken.isEmpty()){
                 request.setPageToken(nextPageToken);
             }
