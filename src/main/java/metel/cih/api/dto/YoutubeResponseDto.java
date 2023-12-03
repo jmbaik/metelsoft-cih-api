@@ -13,5 +13,5 @@ public class YoutubeResponseDto {
     private String prevPageToken;
     private String nextPageToken;
     private String q;
-    List<YoutubeVideoDto> Videos;
+    List<YoutubeVideoDto> videos;
 }

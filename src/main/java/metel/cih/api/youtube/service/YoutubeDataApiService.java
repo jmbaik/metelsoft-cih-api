@@ -5,6 +5,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.client.json.JsonFactory;
@@ -99,8 +100,9 @@ public class YoutubeDataApiService {
                     .setKey(YOUTUBE_API_KEY)
                     .setChannelId(channelId)
                     .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
-                    .setOrder("relevance")
+                    .setOrder("title")
                     .setQ(q)
+                    .setPublishedAfter(DateTime.parseRfc3339("2023-01-01T00:00:00Z"))
                     .setType("video");
             if(nextPageToken != null && !nextPageToken.isEmpty()){
                 request.setPageToken(nextPageToken);

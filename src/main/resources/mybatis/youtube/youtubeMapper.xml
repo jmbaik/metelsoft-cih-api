@@ -27,9 +27,13 @@
     <update id="mergeShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_shorts_ccm
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
-        , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}, #{userId}, now(), #{userId}, now())
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
@@ -66,9 +70,13 @@
     <update id="mergeYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_mercy
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
-        , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}, #{userId}, now(), #{userId}, now())
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
@@ -105,9 +113,13 @@
     <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_sermon
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
-        , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}, #{userId}, now(), #{userId}, now())
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
@@ -144,9 +156,13 @@
     <update id="mergeYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_celeb
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
-        , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}, #{userId}, now(), #{userId}, now())
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
@@ -186,9 +202,13 @@
     <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_pastor
         (vid, p_code, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
-            , grade, sort, description, create_ymd, publishedAt, regid, regdt, updid, upddt)
+            , grade, sort, description, create_ymd, publishedAt
+            , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+            , regid, regdt, updid, upddt)
         values ( #{vid}, #{pastorCode}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-            , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}, #{userId}, now(), #{userId}, now())
+            , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+            , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+            , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}
             , updid=#{userId}, upddt=current_timestamp()
     </insert>
