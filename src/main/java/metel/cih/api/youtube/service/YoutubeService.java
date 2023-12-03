@@ -30,6 +30,10 @@ public class YoutubeService {
     public int deleteYoutubePastor(YoutubeVideoDto youtubePastorDto){
         return mapper.deleteYoutubePastor(youtubePastorDto);
     }
+    public int deleteRealDataYoutubePastor(YoutubeVideoDto youtubePastorDto){
+        return mapper.deleteRealDataYoutubePastor(youtubePastorDto);
+    }
+
     public int mergeOriginVid(OriginVidDto originVidDto){
         return mapper.mergeOriginVid(originVidDto);
     }
@@ -50,6 +54,9 @@ public class YoutubeService {
     public int deleteYoutubeCeleb(YoutubeVideoDto youtubeCelebDto){
         return mapper.deleteYoutubeCeleb(youtubeCelebDto);
     }
+    public int deleteRealDataYoutubeCeleb(YoutubeVideoDto youtubeCelebDto){
+        return mapper.deleteRealDataYoutubeCeleb(youtubeCelebDto);
+    }
 
     // youtube sermon part
     public List<YoutubeVideoDto> selectYoutubeSermon(HashMap<String, Object> map){
@@ -60,6 +67,9 @@ public class YoutubeService {
     }
     public int deleteYoutubeSermon(YoutubeVideoDto youtubeSermonDto){
         return mapper.deleteYoutubeSermon(youtubeSermonDto);
+    }
+    public int deleteRealDataYoutubeSermon(YoutubeVideoDto youtubeSermonDto){
+        return mapper.deleteRealDataYoutubeSermon(youtubeSermonDto);
     }
 
     // youtube mercy part
@@ -72,6 +82,9 @@ public class YoutubeService {
     public int deleteYoutubeMercy(YoutubeVideoDto youtubeMercyDto){
         return mapper.deleteYoutubeMercy(youtubeMercyDto);
     }
+    public int deleteRealDataYoutubeMercy(YoutubeVideoDto youtubeMercyDto){
+        return mapper.deleteRealDataYoutubeMercy(youtubeMercyDto);
+    }
 
     // youtube ccm part
     public List<YoutubeVideoDto> selectShortsCcm(HashMap<String, Object> map){
@@ -82,6 +95,14 @@ public class YoutubeService {
     }
     public int deleteShortsCcm(YoutubeVideoDto shortsCcmDto){
         return mapper.deleteShortsCcm(shortsCcmDto);
+    }
+
+    public int deleteRealDataShortsCcm(YoutubeVideoDto shortsCcmDto){
+        return mapper.deleteRealDataShortsCcm(shortsCcmDto);
+    }
+
+    public int countYoutubeDataExists(YoutubeRequestDto youtubeRequestDto){
+        return mapper.countYoutubeDataExists(youtubeRequestDto);
     }
 
 }

@@ -31,6 +31,12 @@ public class YoutubeDataApiController {
     @PostMapping("/save-videos-by-search")
     public ResponseDto<YoutubeResponseDto> saveVideosBySearchApi(@RequestBody YoutubeRequestDto dto) {
         YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
+        int existsCount = service.countYoutubeDataExists(dto);
+        if(existsCount>0){
+            youtubeResponseDto.setResult("error");
+            youtubeResponseDto.setMessage("이미 조회한 데이터입니다.");
+            return ApiResponse.Success(youtubeResponseDto);
+        }
         List<YoutubeVideoDto> youtubeVideoDtoList = new ArrayList<>();
         String category = dto.getCategory();
         String channelId = dto.getChannelId();
@@ -48,7 +54,7 @@ public class YoutubeDataApiController {
         int totalResults = response.getPageInfo().getTotalResults();
         List<SearchResult> items = response.getItems();
         int itemNo = dto.getLastItemNo();
-        for(SearchResult item: items){
+        for (SearchResult item : items) {
             YoutubeVideoDto youtubeVideoDto = new YoutubeVideoDto();
             youtubeVideoDto.setVid(item.getId().getVideoId());
             youtubeVideoDto.setPastorCode(pastorCode);
@@ -69,31 +75,32 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setUserId(userId);
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
-        if(category.equals("pastor")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("pastor")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeYoutubePastor(youtubeVideoDto);
             }
         }
-        if(category.equals("celeb")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("celeb")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeYoutubeCeleb(youtubeVideoDto);
             }
         }
-        if(category.equals("mercy")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("mercy")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeYoutubeMercy(youtubeVideoDto);
             }
         }
-        if(category.equals("sermon")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("sermon")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeYoutubeSermon(youtubeVideoDto);
             }
         }
-        if(category.equals("ccm")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("ccm")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeShortsCcm(youtubeVideoDto);
             }
         }
+        youtubeResponseDto.setResult("success");
         youtubeResponseDto.setVideos(youtubeVideoDtoList);
         youtubeResponseDto.setCategory(category);
         youtubeResponseDto.setQ(q);
@@ -102,6 +109,39 @@ public class YoutubeDataApiController {
         return ApiResponse.Success(youtubeResponseDto);
     }
 
+    @ResponseBody
+    @PostMapping("/delete-videos")
+    public ResponseDto<Integer> deleteRealDataAllBySearch(@RequestBody YoutubeRequestDto youtubeRequestDto){
+        int result =0;
+        String category = youtubeRequestDto.getCategory();
+        List<YoutubeVideoDto> youtubeVideoDtoList = youtubeRequestDto.getVideos();
+        if(category.equals("pastor")){
+            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                result += service.deleteRealDataYoutubePastor(youtubeVideoDto);
+            }
+        }
+        if(category.equals("celeb")){
+            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                result += service.deleteRealDataYoutubeCeleb(youtubeVideoDto);
+            }
+        }
+        if(category.equals("mercy")){
+            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                result += service.deleteRealDataYoutubeMercy(youtubeVideoDto);
+            }
+        }
+        if(category.equals("sermon")){
+            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                result += service.deleteRealDataYoutubeSermon(youtubeVideoDto);
+            }
+        }
+        if(category.equals("ccm")){
+            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                result += service.deleteRealDataShortsCcm(youtubeVideoDto);
+            }
+        }
+        return ApiResponse.Success(result);
+    }
     @ResponseBody
     @PostMapping("/save-videos-by-channel")
     public ResponseDto<List<YoutubeVideoDto>> saveVideosByChannel(@RequestBody YoutubeRequestDto dto){

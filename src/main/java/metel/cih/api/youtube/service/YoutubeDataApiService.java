@@ -96,10 +96,11 @@ public class YoutubeDataApiService {
         try{
             YouTube youtubeService = getService();
             YouTube.Search.List request = youtubeService.search().list("snippet")
+                    .setKey(YOUTUBE_API_KEY)
                     .setChannelId(channelId)
                     .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
                     .setOrder("relevance")
-                    .setQ("\"+q+\"")
+                    .setQ(q)
                     .setType("video");
             if(nextPageToken != null && !nextPageToken.isEmpty()){
                 request.setPageToken(nextPageToken);

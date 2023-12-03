@@ -36,6 +36,9 @@
     <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_shorts_ccm set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
+    <delete id="deleteRealDataShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_shorts_ccm where vid = #{vid}
+    </delete>
     <!--    end youtube Mercy part -->
 
     <!-- youtube Mercy part -->
@@ -72,6 +75,9 @@
     <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_mercy set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
+    <delete id="deleteRealDataYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_mercy where vid = #{vid}
+    </delete>
     <!--    end youtube Mercy part -->
 
     <!-- youtube sermon part -->
@@ -108,6 +114,9 @@
     <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_sermon set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
+    <delete id="deleteRealDataYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_mercy where vid = #{vid}
+    </delete>
     <!--    end youtube sermon part -->
 
     <!-- youtube celeb part -->
@@ -144,6 +153,9 @@
     <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_celeb set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
+    <delete id="deleteRealDataYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_celeb where vid = #{vid}
+    </delete>
     <!--    end youtube celeb part -->
 
     <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
@@ -191,7 +203,11 @@
     <update id="deleteYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         update tb_youtube_pastor set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
+    <delete id="deleteRealDataYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_pastor where vid = #{vid}
+    </delete>
 
+    <!--    origin vid -->
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
         SELECT a.channel_id as channelId, a.title as channelTitle, a.description as channelDescription
             , concat(substr(a.description,1, 100), '...') as shortDescription, a.regid as userId, a.updid as updId,  a.upddt as updDt
@@ -218,4 +234,27 @@
     <delete id="deleteOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
         DELETE FROM tb_origin_vid WHERE channel_id=#{channelId}
     </delete>
+
+<!--    youtube data api 에러 체크 -->
+    <select id="countYoutubeDataExists" parameterType="metel.cih.api.dto.YoutubeRequestDto" resultType="int">
+        select count(0) from
+            <if test='category.equals("ccm")'>
+                tb_shorts_ccm
+            </if>
+            <if test='category.equals("pastor")'>
+                tb_youtube_pastor
+            </if>
+            <if test='category.equals("celeb")'>
+                tb_youtube_celeb
+            </if>
+            <if test='category.equals("mercy")'>
+                tb_youtube_mercy
+            </if>
+            <if test='category.equals("sermon")'>
+                tb_youtube_sermon
+            </if>
+        where 1=1
+        and prevPageToken = if(#{prevPageToken} is null or #{prevPageToken}='', '999', #{prevPageToken})
+        and nextPageToken = if(#{nextPageToken} is null or #{nextPageToken}='', '999', #{nextPageToken})
+    </select>
 </mapper>
