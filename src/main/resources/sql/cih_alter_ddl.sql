@@ -43,4 +43,25 @@ ALTER TABLE cihdb.tb_shorts_ccm CHANGE totalResults totalResults INT NULL AFTER 
 ALTER TABLE cihdb.tb_shorts_ccm ADD itemNo INT NULL;
 ALTER TABLE cihdb.tb_shorts_ccm CHANGE itemNo itemNo INT NULL AFTER totalResults;
 
+ALTER TABLE cihdb.tb_youtube_pastor ADD qsignal varchar(200) NULL;
+ALTER TABLE cihdb.tb_youtube_pastor CHANGE qsignal qsignal varchar(200) NULL AFTER itemNo;
+
+ALTER TABLE cihdb.tb_youtube_sermon ADD qsignal varchar(200) NULL;
+ALTER TABLE cihdb.tb_youtube_sermon CHANGE qsignal qsignal varchar(200) NULL AFTER itemNo;
+
+ALTER TABLE cihdb.tb_youtube_celeb ADD qsignal varchar(200) NULL;
+ALTER TABLE cihdb.tb_youtube_celeb CHANGE qsignal qsignal varchar(200) NULL AFTER itemNo;
+
+ALTER TABLE cihdb.tb_youtube_mercy ADD qsignal varchar(200) NULL;
+ALTER TABLE cihdb.tb_youtube_mercy CHANGE qsignal qsignal varchar(200) NULL AFTER itemNo;
+
+ALTER TABLE cihdb.tb_shorts_ccm  ADD qsignal varchar(200) NULL;
+ALTER TABLE cihdb.tb_shorts_ccm  CHANGE qsignal qsignal varchar(200) NULL AFTER itemNo;
+
+ALTER TABLE cihdb.tb_youtube_pastor CHANGE qsignal qSignal varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL;
+ALTER TABLE cihdb.tb_youtube_celeb  CHANGE qsignal qSignal varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL;
+ALTER TABLE cihdb.tb_youtube_sermon  CHANGE qsignal qSignal varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL;
+ALTER TABLE cihdb.tb_youtube_mercy  CHANGE qsignal qSignal varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL;
+ALTER TABLE cihdb.tb_shorts_ccm  CHANGE qsignal qSignal varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL NULL;
+
 commit;

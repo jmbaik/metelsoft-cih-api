@@ -7,6 +7,7 @@ import metel.cih.api.base.ApiResponse;
 import metel.cih.api.base.ResponseDto;
 import metel.cih.api.dto.YoutubePlayListDto;
 import metel.cih.api.dto.YoutubeRequestDto;
+import metel.cih.api.dto.YoutubeResponseDto;
 import metel.cih.api.dto.YoutubeVideoDto;
 import metel.cih.api.youtube.service.YoutubeDataApiService;
 import metel.cih.api.youtube.service.YoutubeService;
@@ -28,7 +29,8 @@ public class YoutubeDataApiController {
 
     @ResponseBody
     @PostMapping("/save-videos-by-search")
-    public ResponseDto<List<YoutubeVideoDto>> saveVideosBySearchApi(@RequestBody YoutubeRequestDto dto) {
+    public ResponseDto<YoutubeResponseDto> saveVideosBySearchApi(@RequestBody YoutubeRequestDto dto) {
+        YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
         List<YoutubeVideoDto> youtubeVideoDtoList = new ArrayList<>();
         String category = dto.getCategory();
         String channelId = dto.getChannelId();
@@ -63,6 +65,7 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setNextPageToken(_nextPageToken);
             youtubeVideoDto.setTotalResults(totalResults);
             youtubeVideoDto.setItemNo(itemNo + 1);
+            youtubeVideoDto.setQSignal(channelId + "-" + category + "-" + q);
             youtubeVideoDto.setUserId(userId);
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
@@ -91,7 +94,12 @@ public class YoutubeDataApiController {
                 service.mergeShortsCcm(youtubeVideoDto);
             }
         }
-        return ApiResponse.Success(youtubeVideoDtoList);
+        youtubeResponseDto.setVideos(youtubeVideoDtoList);
+        youtubeResponseDto.setCategory(category);
+        youtubeResponseDto.setQ(q);
+        youtubeResponseDto.setPrevPageToken(_prevPageToken);
+        youtubeResponseDto.setNextPageToken(_nextPageToken);
+        return ApiResponse.Success(youtubeResponseDto);
     }
 
     @ResponseBody

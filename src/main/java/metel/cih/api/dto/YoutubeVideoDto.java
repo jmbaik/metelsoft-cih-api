@@ -23,6 +23,7 @@ public class YoutubeVideoDto {
     private String nextPageToken;
     private int totalResults;
     private int itemNo;
+    private String qSignal;
     private String userId;
     private String updDt;
 }
