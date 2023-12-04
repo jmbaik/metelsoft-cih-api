@@ -111,36 +111,41 @@ public class YoutubeDataApiController {
 
     @ResponseBody
     @PostMapping("/delete-videos")
-    public ResponseDto<Integer> deleteRealDataAllBySearch(@RequestBody YoutubeRequestDto youtubeRequestDto){
-        int result =0;
+    public ResponseDto<YoutubeResponseDto> deleteRealDataAllBySearch(@RequestBody YoutubeRequestDto youtubeRequestDto) {
+        YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
+        int result = 0;
         String category = youtubeRequestDto.getCategory();
         List<YoutubeVideoDto> youtubeVideoDtoList = youtubeRequestDto.getVideos();
-        if(category.equals("pastor")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("pastor")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataYoutubePastor(youtubeVideoDto);
             }
         }
-        if(category.equals("celeb")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("celeb")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataYoutubeCeleb(youtubeVideoDto);
             }
         }
-        if(category.equals("mercy")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("mercy")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataYoutubeMercy(youtubeVideoDto);
             }
         }
-        if(category.equals("sermon")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("sermon")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataYoutubeSermon(youtubeVideoDto);
             }
         }
-        if(category.equals("ccm")){
-            for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+        if (category.equals("ccm")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataShortsCcm(youtubeVideoDto);
             }
         }
-        return ApiResponse.Success(result);
+        youtubeResponseDto.setChannelId(youtubeResponseDto.getChannelId());
+        youtubeResponseDto.setResultCount(result);
+        youtubeResponseDto.setCategory(youtubeResponseDto.getCategory());
+        youtubeResponseDto.setQ(youtubeResponseDto.getQ());
+        return ApiResponse.Success(youtubeResponseDto);
     }
     @ResponseBody
     @PostMapping("/save-videos-by-channel")
