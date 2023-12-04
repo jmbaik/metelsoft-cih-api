@@ -10,6 +10,8 @@ public class YoutubeRequestDto {
     private String channelId;
     private String pastorCode;
     private String q;
+    private String order;
+    private String duration;
     private String userId;
     private String prevPageToken;
     private String nextPageToken;

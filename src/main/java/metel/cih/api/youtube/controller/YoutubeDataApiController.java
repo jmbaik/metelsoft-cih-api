@@ -41,6 +41,8 @@ public class YoutubeDataApiController {
         String category = dto.getCategory();
         String channelId = dto.getChannelId();
         String pastorCode = dto.getPastorCode();
+        String order = dto.getOrder();
+        String duration = dto.getDuration();
         String userId = dto.getUserId();
         String q = dto.getQ();
         String nextPageToken = dto.getNextPageToken();
@@ -48,7 +50,7 @@ public class YoutubeDataApiController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar c1 = Calendar.getInstance();
         String strToday = sdf.format(c1.getTime());
-        SearchListResponse response = youtubeDataApiService.getVideosBySearch(channelId, q, nextPageToken, prevPageToken);
+        SearchListResponse response = youtubeDataApiService.getVideosBySearch(channelId, q, order, duration, nextPageToken, prevPageToken);
         String _prevPageToken = response.getPrevPageToken();
         String _nextPageToken = response.getNextPageToken();
         int totalResults = response.getPageInfo().getTotalResults();

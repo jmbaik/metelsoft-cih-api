@@ -93,23 +93,33 @@ public class YoutubeDataApiService {
         return null;
     }
 
-    public SearchListResponse getVideosBySearch(String channelId, String q, String nextPageToken, String prevPageToken){
+    public SearchListResponse getVideosBySearch(String channelId, String q, String order, String duration, String nextPageToken, String prevPageToken){
         try{
             YouTube youtubeService = getService();
             YouTube.Search.List request = youtubeService.search().list("snippet")
                     .setKey(YOUTUBE_API_KEY)
                     .setChannelId(channelId)
                     .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
-                    .setOrder("title")
-                    .setQ(q)
-                    .setType("video");
-//                    .setPublishedAfter(DateTime.parseRfc3339("2023-01-01T00:00:00Z"))
+                    .setSafeSearch("strict")
+                    .setType("video")
+                    .setVideoLicense("youtube");
+                    // .setPublishedAfter(DateTime.parseRfc3339("2023-01-01T00:00:00Z"))
+            if(q != null && !q.isEmpty()) {
+                request.setQ(q);
+            }
+            if(order != null && !order.isEmpty()){
+                request.setOrder(order);
+            }
+            if(duration.equals("short")){
+                request.setVideoDuration("short");
+            }
             if(nextPageToken != null && !nextPageToken.isEmpty()){
                 request.setPageToken(nextPageToken);
             }
             if(prevPageToken != null && !prevPageToken.isEmpty()){
                 request.setPageToken(prevPageToken);
             }
+            System.out.println(channelId + "-" + q + "-"+ order+"-" + duration);
             return request.execute();
         }catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "

@@ -127,7 +127,7 @@
         update tb_youtube_sermon set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
     </update>
     <delete id="deleteRealDataYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
-        delete from tb_youtube_mercy where vid = #{vid}
+        delete from tb_youtube_sermon where vid = #{vid}
     </delete>
     <!--    end youtube sermon part -->
 
