@@ -112,11 +112,11 @@
     </select>
     <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_sermon
-        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        (vid, channel_id, title, channel_title, thumbnail_d, p_code, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
         , regid, regdt, updid, upddt)
-        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{pastorCode}, #{thumbnailMedium}, #{thumbnailHigh}
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
         , #{userId}, now(), #{userId}, now())
