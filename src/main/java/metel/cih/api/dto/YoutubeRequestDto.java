@@ -8,6 +8,7 @@ import java.util.List;
 public class YoutubeRequestDto {
     private String category;
     private String channelId;
+    private String playlistId;
     private String pastorCode;
     private String q;
     private String order;
