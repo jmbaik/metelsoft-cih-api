@@ -28,11 +28,11 @@
         INSERT INTO tb_shorts_ccm
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt
-        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
-        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
@@ -71,11 +71,11 @@
         INSERT INTO tb_youtube_mercy
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt
-        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
-        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
@@ -114,11 +114,11 @@
         INSERT INTO tb_youtube_sermon
         (vid, channel_id, title, channel_title, thumbnail_d, p_code, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt
-        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{pastorCode}, #{thumbnailMedium}, #{thumbnailHigh}
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
-        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
@@ -157,11 +157,11 @@
         INSERT INTO tb_youtube_celeb
         (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
         , grade, sort, description, create_ymd, publishedAt
-        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, regdt, updid, upddt)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
-        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
         ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
         , updid=#{userId}, upddt=current_timestamp()
@@ -203,13 +203,13 @@
         INSERT INTO tb_youtube_pastor
         (vid, p_code, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
             , grade, sort, description, create_ymd, publishedAt
-            , prevPageToken, nextPageToken, totalResults, itemNo, qSignal
+            , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
             , regid, regdt, updid, upddt)
         values ( #{vid}, #{pastorCode}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
             , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
-            , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}
+            , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
             , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}
+        ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}
             , updid=#{userId}, upddt=current_timestamp()
     </insert>
     <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">

@@ -3,6 +3,7 @@ package metel.cih.api.youtube.controller;
 
 import lombok.RequiredArgsConstructor;
 import metel.cih.api.base.ApiResponse;
+import metel.cih.api.base.CommonUtils;
 import metel.cih.api.base.ResponseDto;
 import metel.cih.api.dto.*;
 import metel.cih.api.youtube.service.YoutubeService;
@@ -33,6 +34,8 @@ public class YoutubeController {
     @ResponseBody
     @PostMapping("/ccm")
     public ResponseDto<Integer> mergeShortsCcm(@RequestBody YoutubeVideoDto shortsCcmDto){
+        String shorts = CommonUtils.IsShorts(shortsCcmDto.getVid());
+        shortsCcmDto.setShorts(shorts);
         int result = service.mergeShortsCcm(shortsCcmDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(shortsCcmDto.getChannelId());
@@ -64,6 +67,8 @@ public class YoutubeController {
     @ResponseBody
     @PostMapping("/mercy")
     public ResponseDto<Integer> mergeYoutubeMercy(@RequestBody YoutubeVideoDto youtubeMercyDto){
+        String shorts = CommonUtils.IsShorts(youtubeMercyDto.getVid());
+        youtubeMercyDto.setShorts(shorts);
         int result = service.mergeYoutubeMercy(youtubeMercyDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeMercyDto.getChannelId());
@@ -92,9 +97,12 @@ public class YoutubeController {
         List<YoutubeVideoDto> list = service.selectYoutubeSermon(map);
         return ApiResponse.Success(list);
     }
+
     @ResponseBody
     @PostMapping("/sermon")
-    public ResponseDto<Integer> mergeYoutubeSermon(@RequestBody YoutubeVideoDto youtubeSermonDto){
+    public ResponseDto<Integer> mergeYoutubeSermon(@RequestBody YoutubeVideoDto youtubeSermonDto) {
+        String shorts = CommonUtils.IsShorts(youtubeSermonDto.getVid());
+        youtubeSermonDto.setShorts(shorts);
         int result = service.mergeYoutubeSermon(youtubeSermonDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeSermonDto.getChannelId());
@@ -126,6 +134,8 @@ public class YoutubeController {
     @ResponseBody
     @PostMapping("/celeb")
     public ResponseDto<Integer> mergeYoutubeCeleb(@RequestBody YoutubeVideoDto youtubeCelebDto){
+        String shorts = CommonUtils.IsShorts(youtubeCelebDto.getVid());
+        youtubeCelebDto.setShorts(shorts);
         int result = service.mergeYoutubeCeleb(youtubeCelebDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubeCelebDto.getChannelId());
@@ -156,6 +166,8 @@ public class YoutubeController {
     @ResponseBody
     @PostMapping("/pastor")
     public ResponseDto<Integer> mergeYoutubePastor(@RequestBody YoutubeVideoDto youtubePastorDto){
+        String shorts = CommonUtils.IsShorts(youtubePastorDto.getVid());
+        youtubePastorDto.setShorts(shorts);
         int result = service.mergeYoutubePastor(youtubePastorDto);
         OriginVidDto originVidDto = new OriginVidDto();
         originVidDto.setChannelId(youtubePastorDto.getChannelId());

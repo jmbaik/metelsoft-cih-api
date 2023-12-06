@@ -4,6 +4,7 @@ import com.google.api.services.youtube.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import metel.cih.api.base.ApiResponse;
+import metel.cih.api.base.CommonUtils;
 import metel.cih.api.base.ResponseDto;
 import metel.cih.api.dto.YoutubePlayListDto;
 import metel.cih.api.dto.YoutubeRequestDto;
@@ -50,14 +51,22 @@ public class YoutubeDataApiController {
         List<PlaylistItem> items = response.getItems();
         int itemNo = dto.getLastItemNo();
         for (PlaylistItem item : items) {
+            if(item.getSnippet().getThumbnails().getDefault() == null){
+                continue;
+            }
             YoutubeVideoDto youtubeVideoDto = new YoutubeVideoDto();
-            youtubeVideoDto.setVid(item.getSnippet().getResourceId().getVideoId());
+            String videoId = item.getSnippet().getResourceId().getVideoId();
+            youtubeVideoDto.setVid(videoId);
+            String shorts = CommonUtils.IsShorts(videoId);
+            youtubeVideoDto.setShorts(shorts);
             youtubeVideoDto.setPastorCode(pastorCode);
             youtubeVideoDto.setChannelId(channelId);
             youtubeVideoDto.setTitle(item.getSnippet().getTitle());
             youtubeVideoDto.setChannelTitle(item.getSnippet().getChannelTitle());
-            youtubeVideoDto.setThumbnailDefault(item.getSnippet().getThumbnails().getDefault().getUrl());
-            youtubeVideoDto.setThumbnailMedium(item.getSnippet().getThumbnails().getMedium().getUrl());
+            youtubeVideoDto.setThumbnailDefault(item.getSnippet().getThumbnails().getDefault() != null ?
+                    item.getSnippet().getThumbnails().getDefault().getUrl() : null);
+            youtubeVideoDto.setThumbnailMedium(item.getSnippet().getThumbnails().getMedium() != null?
+                    item.getSnippet().getThumbnails().getMedium().getUrl() : null);
             youtubeVideoDto.setThumbnailHigh(item.getSnippet().getThumbnails().getHigh().getUrl());
             youtubeVideoDto.setDescription(item.getSnippet().getDescription());
             youtubeVideoDto.setCreateYmd(strToday);
@@ -133,8 +142,14 @@ public class YoutubeDataApiController {
         List<SearchResult> items = response.getItems();
         int itemNo = dto.getLastItemNo();
         for (SearchResult item : items) {
+            if(item.getSnippet().getThumbnails().getDefault() == null){
+                continue;
+            }
+            String videoId = item.getId().getVideoId();
             YoutubeVideoDto youtubeVideoDto = new YoutubeVideoDto();
-            youtubeVideoDto.setVid(item.getId().getVideoId());
+            youtubeVideoDto.setVid(videoId);
+            String shorts = CommonUtils.IsShorts(videoId);
+            youtubeVideoDto.setShorts(shorts);
             youtubeVideoDto.setPastorCode(pastorCode);
             youtubeVideoDto.setChannelId(channelId);
             youtubeVideoDto.setTitle(item.getSnippet().getTitle());
@@ -251,8 +266,14 @@ public class YoutubeDataApiController {
             List<PlaylistItem> items = itemsResponse.getItems();
             int itemNo = dto.getLastItemNo();
             for(PlaylistItem item : items){
+                if(item.getSnippet().getThumbnails().getDefault() == null){
+                    continue;
+                }
+                String videoId = item.getSnippet().getResourceId().getVideoId();
                 YoutubeVideoDto youtubeVideoDto = new YoutubeVideoDto();
-                youtubeVideoDto.setVid(item.getSnippet().getResourceId().getVideoId());
+                youtubeVideoDto.setVid(videoId);
+                String shorts = CommonUtils.IsShorts(videoId);
+                youtubeVideoDto.setShorts(shorts);
                 youtubeVideoDto.setPastorCode(pastorCode);
                 youtubeVideoDto.setChannelId(channelId);
                 youtubeVideoDto.setTitle(item.getSnippet().getTitle());
