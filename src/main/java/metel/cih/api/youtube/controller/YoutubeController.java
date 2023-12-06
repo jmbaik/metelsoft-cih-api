@@ -18,6 +18,39 @@ import java.util.List;
 public class YoutubeController {
     private final YoutubeService service;
 
+    // youtube faith part
+    @ResponseBody
+    @GetMapping("/faith")
+    public ResponseDto<List<YoutubeVideoDto>> getYoutubeFaith(
+            @RequestParam(value="options", required = false) String options
+            ,@RequestParam(value="keyword", required = false) String keyword) {
+        System.out.println("----"+options);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("options", options);
+        map.put("keyword", keyword);
+        List<YoutubeVideoDto> list = service.selectYoutubeFaith(map);
+        return ApiResponse.Success(list);
+    }
+    @ResponseBody
+    @PostMapping("/faith")
+    public ResponseDto<Integer> mergeYoutubeFaith(@RequestBody YoutubeVideoDto youtubeFaithDto){
+        String shorts = CommonUtils.IsShorts(youtubeFaithDto.getVid());
+        youtubeFaithDto.setShorts(shorts);
+        int result = service.mergeYoutubeFaith(youtubeFaithDto);
+        OriginVidDto originVidDto = new OriginVidDto();
+        originVidDto.setChannelId(youtubeFaithDto.getChannelId());
+        originVidDto.setChannelTitle(youtubeFaithDto.getChannelTitle());
+        originVidDto.setUserId(youtubeFaithDto.getUserId());
+        result += service.mergeOriginVid(originVidDto);
+        return ApiResponse.Success(result);
+    }
+    @ResponseBody
+    @PostMapping("/faith-delete")
+    public ResponseDto<Integer> deleteYoutubeFaith(@RequestBody YoutubeVideoDto youtubeFaithDto){
+        Integer result = service.deleteYoutubeFaith(youtubeFaithDto);
+        return ApiResponse.Success(result);
+    }
+
     // shorts ccm part
     @ResponseBody
     @GetMapping("/ccm")

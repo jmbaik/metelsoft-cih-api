@@ -2,6 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="metel.cih.api.youtube.mapper.YoutubeMapper">
 
+    <!-- youtube faith part -->
+    <select id="selectYoutubeFaith" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        FROM tb_youtube_faith a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_faith
+        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, regdt, updid, upddt)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, now(), #{userId}, now())
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        , updid=#{userId}, upddt=current_timestamp()
+    </update>
+    <update id="deleteYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_faith set del_yn = 'Y', updid=#{userId}, upddt=current_timestamp()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_faith where vid = #{vid}
+    </delete>
+    <!--    end youtube faith part -->
+
     <!-- youtube Mercy part -->
     <select id="selectShortsCcm" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort

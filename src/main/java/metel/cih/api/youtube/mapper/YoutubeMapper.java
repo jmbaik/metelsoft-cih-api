@@ -49,6 +49,12 @@ public interface YoutubeMapper {
     int deleteShortsCcm(YoutubeVideoDto shortsCcmDto);
     int deleteRealDataShortsCcm(YoutubeVideoDto shortsCcmDto);
 
+    //    youtube celeb part start
+    List<YoutubeVideoDto> selectYoutubeFaith(HashMap<String, Object> map);
+    int mergeYoutubeFaith(YoutubeVideoDto youtubeFaithDto);
+    int deleteYoutubeFaith(YoutubeVideoDto youtubeFaithDto);
+    int deleteRealDataYoutubeFaith(YoutubeVideoDto youtubeFaithDto);
+
     int countYoutubeDataExists(YoutubeRequestDto youtubeRequestDto);
 
 

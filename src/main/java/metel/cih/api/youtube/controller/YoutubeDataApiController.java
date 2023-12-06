@@ -28,7 +28,6 @@ public class YoutubeDataApiController {
     private final YoutubeService service;
     private final YoutubeDataApiService youtubeDataApiService;
 
-
     @ResponseBody
     @PostMapping("/save-videos-by-playlist")
     public ResponseDto<YoutubeResponseDto> saveVideosByPlaylistId(@RequestBody YoutubeRequestDto dto){
@@ -102,6 +101,11 @@ public class YoutubeDataApiController {
         if (category.equals("ccm")) {
             for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeShortsCcm(youtubeVideoDto);
+            }
+        }
+        if (category.equals("faith")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
+                service.mergeYoutubeFaith(youtubeVideoDto);
             }
         }
         youtubeResponseDto.setResult("success");
@@ -193,6 +197,11 @@ public class YoutubeDataApiController {
                 service.mergeShortsCcm(youtubeVideoDto);
             }
         }
+        if (category.equals("faith")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
+                service.mergeYoutubeFaith(youtubeVideoDto);
+            }
+        }
         youtubeResponseDto.setResult("success");
         youtubeResponseDto.setVideos(youtubeVideoDtoList);
         youtubeResponseDto.setCategory(category);
@@ -232,6 +241,11 @@ public class YoutubeDataApiController {
         if (category.equals("ccm")) {
             for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 result += service.deleteRealDataShortsCcm(youtubeVideoDto);
+            }
+        }
+        if (category.equals("faith")) {
+            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
+                result += service.deleteRealDataYoutubeFaith(youtubeVideoDto);
             }
         }
         youtubeResponseDto.setChannelId(youtubeResponseDto.getChannelId());
@@ -316,6 +330,11 @@ public class YoutubeDataApiController {
                     service.mergeShortsCcm(youtubeVideoDto);
                 }
             }
+            if(category.equals("faith")){
+                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
+                    service.mergeYoutubeFaith(youtubeVideoDto);
+                }
+            }
         }
         return ApiResponse.Success(youtubeVideoDtoList);
     }
@@ -360,6 +379,12 @@ public class YoutubeDataApiController {
                 service.mergeShortsCcm(item);
             }
             result = service.selectShortsCcm(param);
+        }
+        if (category.equals("faith")) {
+            for (YoutubeVideoDto item: videos){
+                service.mergeYoutubeFaith(item);
+            }
+            result = service.selectYoutubeFaith(param);
         }
         return ApiResponse.Success(result);
     }

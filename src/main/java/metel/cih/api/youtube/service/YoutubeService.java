@@ -105,4 +105,19 @@ public class YoutubeService {
         return mapper.countYoutubeDataExists(youtubeRequestDto);
     }
 
+    // youtube fiath part
+    public List<YoutubeVideoDto> selectYoutubeFaith(HashMap<String, Object> map){
+        return mapper.selectYoutubeFaith(map);
+    }
+    public int mergeYoutubeFaith(YoutubeVideoDto youtubeFaithDto){
+        return mapper.mergeYoutubeFaith(youtubeFaithDto);
+    }
+    public int deleteYoutubeFaith(YoutubeVideoDto youtubeFaithDto){
+        return mapper.deleteYoutubeFaith(youtubeFaithDto);
+    }
+    public int deleteRealDataYoutubeFaith(YoutubeVideoDto youtubeFaithDto){
+        return mapper.deleteRealDataYoutubeFaith(youtubeFaithDto);
+    }
+
+
 }
