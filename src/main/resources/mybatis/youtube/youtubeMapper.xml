@@ -34,7 +34,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -77,7 +77,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -120,7 +120,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -163,7 +163,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
