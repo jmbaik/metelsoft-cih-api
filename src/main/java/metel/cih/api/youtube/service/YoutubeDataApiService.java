@@ -93,6 +93,32 @@ public class YoutubeDataApiService {
         return null;
     }
 
+    public List<PlaylistItemListResponse> getAllPlayListItems(String playListId) {
+        List<PlaylistItemListResponse> result = new ArrayList<>();
+        try {
+            String nextPageToken = "";
+            YouTube youtubeService = getService();
+            while (nextPageToken != null) {
+                YouTube.PlaylistItems.List request = youtubeService.playlistItems().list("snippet,contentDetails,status")
+                        .setPlaylistId(playListId).setKey(YOUTUBE_API_KEY)
+                        .setMaxResults(NUMBER_OF_VIDEOS_RETURNED)
+                        .setPageToken(nextPageToken);
+                PlaylistItemListResponse response = request.execute();
+                nextPageToken = response.getNextPageToken();
+                result.add(response);
+            }
+            return result;
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            log.debug(t.getMessage());
+        }
+        return null;
+    }
+
     public SearchListResponse getVideosBySearch(String channelId, String q, String order, String duration, String nextPageToken, String prevPageToken){
         try{
             YouTube youtubeService = getService();

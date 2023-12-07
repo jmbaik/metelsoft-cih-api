@@ -29,6 +29,122 @@ public class YoutubeDataApiController {
     private final YoutubeDataApiService youtubeDataApiService;
 
     @ResponseBody
+    @PostMapping("/save-all-videos-by-playlist")
+    public ResponseDto<YoutubeResponseDto> saveAllVideosByPlaylistId(@RequestBody YoutubeRequestDto request){
+        YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
+        List<YoutubeVideoDto> youtubeVideoDtoList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar c1 = Calendar.getInstance();
+        String strToday = sdf.format(c1.getTime());
+        request.setStrToday(strToday);
+        boolean isShortsCheck = request.getShortsCheckYn().equals("Y");
+        List<PlaylistItemListResponse> responses = youtubeDataApiService.getAllPlayListItems(request.getPlaylistId());
+        for(PlaylistItemListResponse response: responses){
+            setVideoListFromPlaylistItemList(request, response, youtubeVideoDtoList, isShortsCheck);
+        }
+        mergeYoutubeVideoToTables(request.getCategory(), youtubeVideoDtoList);
+        youtubeResponseDto.setResult("success");
+        youtubeResponseDto.setVideos(youtubeVideoDtoList);
+        youtubeResponseDto.setCategory(request.getCategory());
+        return ApiResponse.Success(youtubeResponseDto);
+    }
+    @ResponseBody
+    @PostMapping("/update-shorts-by-playlist")
+    public ResponseDto<YoutubeResponseDto> updateShortsByPlaylist(@RequestBody YoutubeRequestDto request){
+        YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
+        String category = request.getCategory();
+        String qSignal = CommonUtils.getQSignal(request);
+        HashMap<String, Object> map = new HashMap<>();
+        List<YoutubeVideoDto> list = new ArrayList<>();
+        map.put("qSignal", qSignal);
+        if (category.equals("pastor")) {
+            list = service.selectYoutubePastor(map);
+        }
+        if (category.equals("celeb")) {
+            list = service.selectYoutubeCeleb(map);
+        }
+        if (category.equals("mercy")) {
+            list = service.selectYoutubeMercy(map);
+        }
+        if (category.equals("sermon")) {
+            list = service.selectYoutubeSermon(map);
+        }
+        if (category.equals("ccm")) {
+            list = service.selectShortsCcm(map);
+        }
+        if (category.equals("faith")) {
+            list = service.selectYoutubeFaith(map);
+        }
+        for(YoutubeVideoDto dto: list){
+            String shorts = dto.getShorts();
+            if(shorts == null || shorts.equals("N")) {
+                shorts = CommonUtils.IsShorts(dto.getVid());
+                dto.setShorts(shorts);
+                if (category.equals("pastor")) {
+                    service.mergeYoutubePastor(dto);
+                }
+                if (category.equals("celeb")) {
+                    service.mergeYoutubeCeleb(dto);
+                }
+                if (category.equals("sermon")) {
+                    service.mergeYoutubeSermon(dto);
+                }
+                if (category.equals("ccm")) {
+                    service.mergeShortsCcm(dto);
+                }
+                if (category.equals("faith")) {
+                    service.mergeYoutubeFaith(dto);
+                }
+                if (category.equals("mercy")) {
+                    service.mergeYoutubeMercy(dto);
+                }
+            }
+        }
+        youtubeResponseDto.setResult("success");
+        youtubeResponseDto.setVideos(list);
+        youtubeResponseDto.setCategory(request.getCategory());
+        return ApiResponse.Success(youtubeResponseDto);
+    }
+
+    private void setVideoListFromPlaylistItemList(YoutubeRequestDto request, PlaylistItemListResponse response,  List<YoutubeVideoDto> youtubeVideoDtoList){
+        setVideoListFromPlaylistItemList(request, response, youtubeVideoDtoList, false);
+    }
+    private void setVideoListFromPlaylistItemList(YoutubeRequestDto request, PlaylistItemListResponse response,  List<YoutubeVideoDto> youtubeVideoDtoList, boolean isShorts){
+        String _prevPageToken = response.getPrevPageToken();
+        String _nextPageToken = response.getNextPageToken();
+        int totalResults = response.getPageInfo().getTotalResults();
+        List<PlaylistItem> items = response.getItems();
+        for (PlaylistItem item : items) {
+            if(item.getSnippet().getThumbnails().getDefault() == null){
+                continue;
+            }
+            YoutubeVideoDto youtubeVideoDto = new YoutubeVideoDto();
+            String videoId = item.getSnippet().getResourceId().getVideoId();
+            youtubeVideoDto.setVid(videoId);
+            if(isShorts){
+                String shorts = CommonUtils.IsShorts(videoId);
+                youtubeVideoDto.setShorts(shorts);
+            }
+            youtubeVideoDto.setPastorCode(request.getPastorCode());
+            youtubeVideoDto.setChannelId(item.getSnippet().getChannelId());
+            youtubeVideoDto.setTitle(item.getSnippet().getTitle());
+            youtubeVideoDto.setChannelTitle(item.getSnippet().getChannelTitle());
+            youtubeVideoDto.setThumbnailDefault(item.getSnippet().getThumbnails().getDefault().getUrl());
+            youtubeVideoDto.setThumbnailMedium(item.getSnippet().getThumbnails().getMedium().getUrl());
+            youtubeVideoDto.setThumbnailHigh(item.getSnippet().getThumbnails().getHigh().getUrl());
+            youtubeVideoDto.setDescription(item.getSnippet().getDescription());
+            youtubeVideoDto.setCreateYmd(request.getStrToday());
+            youtubeVideoDto.setPublishedAt(item.getSnippet().getPublishedAt().toString());
+            youtubeVideoDto.setPrevPageToken(_prevPageToken);
+            youtubeVideoDto.setNextPageToken(_nextPageToken);
+            youtubeVideoDto.setTotalResults(totalResults);
+            youtubeVideoDto.setItemNo(request.getLastItemNo() + 1);
+            youtubeVideoDto.setQSignal(CommonUtils.getQSignal(request));
+            youtubeVideoDto.setUserId(request.getUserId());
+            youtubeVideoDtoList.add(youtubeVideoDto);
+        }
+    }
+    @ResponseBody
     @PostMapping("/save-videos-by-playlist")
     public ResponseDto<YoutubeResponseDto> saveVideosByPlaylistId(@RequestBody YoutubeRequestDto dto){
         YoutubeResponseDto youtubeResponseDto = new YoutubeResponseDto();
@@ -62,10 +178,8 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setChannelId(channelId);
             youtubeVideoDto.setTitle(item.getSnippet().getTitle());
             youtubeVideoDto.setChannelTitle(item.getSnippet().getChannelTitle());
-            youtubeVideoDto.setThumbnailDefault(item.getSnippet().getThumbnails().getDefault() != null ?
-                    item.getSnippet().getThumbnails().getDefault().getUrl() : null);
-            youtubeVideoDto.setThumbnailMedium(item.getSnippet().getThumbnails().getMedium() != null?
-                    item.getSnippet().getThumbnails().getMedium().getUrl() : null);
+            youtubeVideoDto.setThumbnailDefault(item.getSnippet().getThumbnails().getDefault().getUrl());
+            youtubeVideoDto.setThumbnailMedium(item.getSnippet().getThumbnails().getMedium().getUrl());
             youtubeVideoDto.setThumbnailHigh(item.getSnippet().getThumbnails().getHigh().getUrl());
             youtubeVideoDto.setDescription(item.getSnippet().getDescription());
             youtubeVideoDto.setCreateYmd(strToday);
@@ -78,6 +192,16 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setUserId(userId);
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
+        mergeYoutubeVideoToTables(category, youtubeVideoDtoList);
+        youtubeResponseDto.setResult("success");
+        youtubeResponseDto.setVideos(youtubeVideoDtoList);
+        youtubeResponseDto.setCategory(category);
+        youtubeResponseDto.setPrevPageToken(_prevPageToken);
+        youtubeResponseDto.setNextPageToken(_nextPageToken);
+        return ApiResponse.Success(youtubeResponseDto);
+    }
+
+    private void mergeYoutubeVideoToTables(String category, List<YoutubeVideoDto> youtubeVideoDtoList) {
         if (category.equals("pastor")) {
             for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
                 service.mergeYoutubePastor(youtubeVideoDto);
@@ -108,12 +232,6 @@ public class YoutubeDataApiController {
                 service.mergeYoutubeFaith(youtubeVideoDto);
             }
         }
-        youtubeResponseDto.setResult("success");
-        youtubeResponseDto.setVideos(youtubeVideoDtoList);
-        youtubeResponseDto.setCategory(category);
-        youtubeResponseDto.setPrevPageToken(_prevPageToken);
-        youtubeResponseDto.setNextPageToken(_nextPageToken);
-        return ApiResponse.Success(youtubeResponseDto);
     }
 
     @ResponseBody
@@ -172,36 +290,7 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setUserId(userId);
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
-        if (category.equals("pastor")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeYoutubePastor(youtubeVideoDto);
-            }
-        }
-        if (category.equals("celeb")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeYoutubeCeleb(youtubeVideoDto);
-            }
-        }
-        if (category.equals("mercy")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeYoutubeMercy(youtubeVideoDto);
-            }
-        }
-        if (category.equals("sermon")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeYoutubeSermon(youtubeVideoDto);
-            }
-        }
-        if (category.equals("ccm")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeShortsCcm(youtubeVideoDto);
-            }
-        }
-        if (category.equals("faith")) {
-            for (YoutubeVideoDto youtubeVideoDto : youtubeVideoDtoList) {
-                service.mergeYoutubeFaith(youtubeVideoDto);
-            }
-        }
+        mergeYoutubeVideoToTables(category, youtubeVideoDtoList);
         youtubeResponseDto.setResult("success");
         youtubeResponseDto.setVideos(youtubeVideoDtoList);
         youtubeResponseDto.setCategory(category);
@@ -305,36 +394,7 @@ public class YoutubeDataApiController {
                 youtubeVideoDto.setUserId(userId);
                 youtubeVideoDtoList.add(youtubeVideoDto);
             }
-            if(category.equals("pastor")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeYoutubePastor(youtubeVideoDto);
-                }
-            }
-            if(category.equals("celeb")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeYoutubeCeleb(youtubeVideoDto);
-                }
-            }
-            if(category.equals("mercy")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeYoutubeMercy(youtubeVideoDto);
-                }
-            }
-            if(category.equals("sermon")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeYoutubeSermon(youtubeVideoDto);
-                }
-            }
-            if(category.equals("ccm")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeShortsCcm(youtubeVideoDto);
-                }
-            }
-            if(category.equals("faith")){
-                for(YoutubeVideoDto youtubeVideoDto: youtubeVideoDtoList){
-                    service.mergeYoutubeFaith(youtubeVideoDto);
-                }
-            }
+            mergeYoutubeVideoToTables(category, youtubeVideoDtoList);
         }
         return ApiResponse.Success(youtubeVideoDtoList);
     }

@@ -6,7 +6,8 @@
     <select id="selectYoutubeFaith" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
         , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt
         FROM tb_youtube_faith a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
@@ -18,6 +19,9 @@
         </if>
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
@@ -34,7 +38,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -49,7 +53,8 @@
     <select id="selectShortsCcm" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
         , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt
         FROM tb_shorts_ccm a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
@@ -61,6 +66,9 @@
         </if>
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
@@ -77,7 +85,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -92,7 +100,8 @@
     <select id="selectYoutubeMercy" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
         , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt
         FROM tb_youtube_mercy a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
@@ -104,6 +113,9 @@
         </if>
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
@@ -120,7 +132,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -135,7 +147,8 @@
     <select id="selectYoutubeSermon" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
         , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt
         FROM tb_youtube_sermon a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
@@ -147,6 +160,9 @@
         </if>
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
@@ -163,7 +179,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -178,7 +194,8 @@
     <select id="selectYoutubeCeleb" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
         , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt
         FROM tb_youtube_celeb a inner join tb_origin_vid b on a.channel_id = b.channel_id
         where 1=1
         and a.del_yn = 'N'
@@ -190,6 +207,9 @@
         </if>
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
@@ -206,7 +226,7 @@
         , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=current_timestamp()
     </update>
     <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -220,7 +240,8 @@
     <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
         SELECT a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd, a.grade, a.sort
             , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
-            , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.regid as userId, a.upddt as updDt
+            , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+            , a.regid as userId, a.upddt as updDt
         FROM tb_youtube_pastor a inner join tb_origin_vid b on a.channel_id = b.channel_id
         inner join tb_pastor c on a.p_code = c.p_code
         where 1=1
@@ -237,6 +258,9 @@
         <if test='options != null and options == "vid"'>
             AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
         </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
             LIMIT 50
@@ -252,7 +276,7 @@
             , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
             , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
             , #{userId}, now(), #{userId}, now())
-        ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}
+        ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
             , updid=#{userId}, upddt=current_timestamp()
     </insert>
     <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -272,15 +296,22 @@
 
     <!--    origin vid -->
     <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
-        SELECT a.channel_id as channelId, a.title as channelTitle, a.description as channelDescription
-            , concat(substr(a.description,1, 100), '...') as shortDescription, a.regid as userId, a.updid as updId,  a.upddt as updDt
-            , (select count(0) from tb_youtube_pastor b where b.channel_id = a.channel_id) as itemsCount
-        FROM tb_origin_vid a
-        where 1=1
+        select concat((y1+y2+y3+y4+y5), '  P:', y1, ' C:', y2, ' S:', y3, ' F:', y4, ' M:', y5) as itemsCount, m.*
+        from (
+            SELECT a.channel_id as channelId, a.title as channelTitle, a.description as channelDescription
+                , concat(substr(a.description,1, 100), '...') as shortDescription, a.regid as userId, a.updid as updId,  a.upddt as updDt
+                , (select count(0) from tb_youtube_pastor b where b.channel_id = a.channel_id) as y1
+                , (select count(0) from tb_youtube_celeb  b where b.channel_id = a.channel_id) as y2
+                , (select count(0) from tb_youtube_sermon b where b.channel_id = a.channel_id) as y3
+                , (select count(0) from tb_youtube_faith  b where b.channel_id = a.channel_id) as y4
+                , (select count(0) from tb_shorts_ccm  b where b.channel_id = a.channel_id) as y5
+            FROM tb_origin_vid a
+            where 1=1
         <if test='channelTitle != null and channelTitle != ""'>
             and a.title like concat('%', #{channelTitle}, '%')
         </if>
-        order by a.upddt desc
+        ) m
+        order by m.upddt desc
     </select>
 
     <insert id="mergeOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
