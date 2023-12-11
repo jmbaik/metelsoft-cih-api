@@ -23,11 +23,14 @@ public class YoutubeController {
     @GetMapping("/faith")
     public ResponseDto<List<YoutubeVideoDto>> getYoutubeFaith(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
         List<YoutubeVideoDto> list = service.selectYoutubeFaith(map);
         return ApiResponse.Success(list);
     }

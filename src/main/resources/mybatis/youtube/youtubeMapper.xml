@@ -23,6 +23,9 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
         <if test='options != null and options == "time"'>
             LIMIT 50
