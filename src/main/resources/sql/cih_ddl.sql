@@ -265,3 +265,49 @@ CREATE TABLE `tb_youtube_faith` (
   `del_yn` varchar(1) DEFAULT 'N',
   PRIMARY KEY (`vid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- cihdb.tb_comments definition
+
+CREATE TABLE `tb_comments` (
+  `category` varchar(100) NOT NULL,
+  `vid` varchar(30) NOT NULL,
+  `commentId` int(11) NOT NULL,
+  `comment` varchar(2000) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `nickName` varchar(200) DEFAULT NULL,
+  `userId` varchar(100) DEFAULT NULL,
+  `regdt` datetime NOT NULL DEFAULT current_timestamp(),
+  `upddt` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`category`,`vid`,`commentId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- cihdb.tb_statics definition
+
+CREATE TABLE `tb_statics` (
+  `category` varchar(100) NOT NULL,
+  `vid` varchar(30) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0,
+  `hates` int(11) NOT NULL DEFAULT 0,
+  `regdt` datetime NOT NULL DEFAULT current_timestamp(),
+  `upddt` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`vid`,`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- cihdb.tb_users definition
+
+CREATE TABLE `tb_users` (
+  `uid` varchar(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `nickName` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `grade` varchar(1) NOT NULL DEFAULT 'u',
+  `delYn` varchar(1) DEFAULT 'N',
+  `last` datetime DEFAULT current_timestamp(),
+  `regdt` datetime DEFAULT current_timestamp(),
+  `upddt` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

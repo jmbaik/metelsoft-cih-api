@@ -27,4 +27,6 @@ public class YoutubeVideoDto {
     private String shorts = "N";
     private String userId;
     private String updDt;
+    private int likes;
+    private int hates;
 }
