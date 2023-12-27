@@ -33,7 +33,7 @@
         SELECT a.p_code as pastorCode, a.c_code as churchCode, a.grade, a.name, a.comment, a.pic
             , b.name as churchName
             , a.reg_id as regId, a.reg_dt as regDt, a.upd_id as updId, a.upd_dt as updDt
-        FROM tb_pastor a inner join tb_church_code b on a.c_code = b.c_code
+        FROM tb_pastor a left join tb_church_code b on a.c_code = b.c_code
         order by a.upd_dt desc
     </select>
 

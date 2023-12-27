@@ -56,15 +56,21 @@ public class AppController {
             @RequestParam(value="options", required = false) String options
             ,@RequestParam(value="keyword", required = false) String keyword
             ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) String page
     ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
         map.put("shorts", shorts);
+        if(page != null ){
+            int _page = Integer.parseInt(page);
+            map.put("page", (_page-1)*50);
+        }
         List<YoutubeVideoDto> list = service.selectYoutubeFaith(map);
         return ApiResponse.Success(list);
     }
+
     @ResponseBody
     @PostMapping("/faith")
     public ResponseDto<Integer> mergeYoutubeFaith(@RequestBody YoutubeVideoDto youtubeFaithDto){
@@ -90,11 +96,16 @@ public class AppController {
     @GetMapping("/ccm")
     public ResponseDto<List<YoutubeVideoDto>> getShortsCcm(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) int page
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
+        map.put("page", (page-1)*50);
         List<YoutubeVideoDto> list = service.selectShortsCcm(map);
         return ApiResponse.Success(list);
     }
@@ -123,11 +134,16 @@ public class AppController {
     @GetMapping("/mercy")
     public ResponseDto<List<YoutubeVideoDto>> getYoutubeMercy(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) int page
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
+        map.put("page", (page-1)*50);
         List<YoutubeVideoDto> list = service.selectYoutubeMercy(map);
         return ApiResponse.Success(list);
     }
@@ -156,11 +172,16 @@ public class AppController {
     @GetMapping("/sermon")
     public ResponseDto<List<YoutubeVideoDto>> getYoutubeSermon(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) int page
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
+        map.put("page", (page-1)*50);
         List<YoutubeVideoDto> list = service.selectYoutubeSermon(map);
         return ApiResponse.Success(list);
     }
@@ -190,11 +211,16 @@ public class AppController {
     @GetMapping("/celeb")
     public ResponseDto<List<YoutubeVideoDto>> getYoutubeCeleb(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) int page
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
+        map.put("page", (page-1)*50);
         List<YoutubeVideoDto> list = service.selectYoutubeCeleb(map);
         return ApiResponse.Success(list);
     }
@@ -222,11 +248,17 @@ public class AppController {
     @GetMapping("/pastor")
     public ResponseDto<List<YoutubeVideoDto>> getYoutubePastor(
             @RequestParam(value="options", required = false) String options
-            ,@RequestParam(value="keyword", required = false) String keyword) {
+            ,@RequestParam(value="keyword", required = false) String keyword
+            ,@RequestParam(value="shorts", required = false) String shorts
+            ,@RequestParam(value="page", required = false) Integer page
+    ) {
         System.out.println("----"+options);
         HashMap<String, Object> map = new HashMap<>();
         map.put("options", options);
         map.put("keyword", keyword);
+        map.put("shorts", shorts);
+        if(page != null)
+            map.put("page", (page-1)*50);
         List<YoutubeVideoDto> list = service.selectYoutubePastor(map);
         return ApiResponse.Success(list);
     }

@@ -49,7 +49,12 @@
             AND a.shorts = #{shorts}
         </if>
         order by a.upddt desc
-        LIMIT 50
+        <if test='page == null or page == ""'>
+            LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
+        </if>
     </select>
     <update id="mergeYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         INSERT INTO tb_youtube_faith
@@ -93,9 +98,15 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
-        <if test='options != null and options == "time"'>
+        <if test='page == null or page == ""'>
             LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
         </if>
     </select>
     <update id="mergeShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -140,9 +151,15 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
-        <if test='options != null and options == "time"'>
+        <if test='page == null or page == ""'>
             LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
         </if>
     </select>
     <update id="mergeYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -187,9 +204,15 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
-        <if test='options != null and options == "time"'>
+        <if test='page == null or page == ""'>
             LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
         </if>
     </select>
     <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -234,9 +257,15 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
-        <if test='options != null and options == "time"'>
+        <if test='page == null or page == ""'>
             LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
         </if>
     </select>
     <update id="mergeYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -284,9 +313,15 @@
         <if test='qSignal != null and qSignal != ""'>
             AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
         </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
         order by a.upddt desc
-        <if test='options != null and options == "time"'>
+        <if test='page == null or page == ""'>
             LIMIT 50
+        </if>
+        <if test='page != null and page != ""'>
+            LIMIT #{page}, 50
         </if>
     </select>
     <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
