@@ -23,6 +23,24 @@ public class AppController {
     private final AppService service;
 
     @ResponseBody
+    @GetMapping("/main-pastor")
+    public ResponseDto<List<YoutubeVideoDto>> getMainPastor() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("any", "any");
+          List<YoutubeVideoDto> list = service.selectMainPastor(map);
+        return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
+    @GetMapping("/main-celeb")
+    public ResponseDto<List<YoutubeVideoDto>> getMainCeleb() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("any", "any");
+          List<YoutubeVideoDto> list = service.selectMainCeleb(map);
+        return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
     @GetMapping("/comments")
     public ResponseDto<List<CommentsDto>> getComments(
             @RequestParam(value="category", required = true) String category

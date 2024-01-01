@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 public interface AppMapper {
 
+    List<YoutubeVideoDto> selectMainPastor(HashMap<String, Object> map);
+    List<YoutubeVideoDto> selectMainCeleb(HashMap<String, Object> map);
     List<CommentsDto> selectComments(CommentsDto commentsDto);
     int mergeComments(CommentsDto commentsDto);
     int mergeStatics(StaticsDto staticsDto);

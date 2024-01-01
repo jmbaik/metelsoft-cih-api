@@ -2,6 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="metel.cih.api.app.mapper.AppMapper">
 
+    <select id="selectMainCeleb" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT
+        a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts
+        , a.regid as userId, a.upddt as updDt
+        FROM tb_youtube_celeb a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.shorts = 'N'
+        and a.del_yn = 'N'
+        order by a.upddt desc limit 10
+    </select>
+
+    <select id="selectMainPastor" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        select * from (
+            SELECT row_number() over(partition by a.p_code order by a.upddt desc) as rn
+                , a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd, a.grade, a.sort
+                , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+                , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts
+                , a.regid as userId, a.upddt as updDt
+            FROM tb_youtube_pastor a inner join tb_origin_vid b on a.channel_id = b.channel_id
+            inner join tb_pastor c on a.p_code = c.p_code and c.pic is not null
+            where 1=1
+            and a.del_yn = 'N'
+        ) m where rn =1 limit 4
+    </select>
+
     <select id="selectComments" parameterType="metel.cih.api.dto.CommentsDto">
         SELECT a.category, a.vid, a.commentId, a.comment, a.phone, a.nickName, a.userId
             , a.regdt as regDt, a.upddt as updDt
