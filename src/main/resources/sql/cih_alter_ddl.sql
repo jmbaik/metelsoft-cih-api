@@ -29,3 +29,20 @@ ALTER TABLE cihdb.tb_youtube_sermon CHANGE shorts shorts varchar(1) DEFAULT 'N' 
 
 ALTER TABLE cihdb.tb_shorts_ccm  ADD shorts varchar(1) DEFAULT 'N' NULL;
 ALTER TABLE cihdb.tb_shorts_ccm CHANGE shorts shorts varchar(1) DEFAULT 'N' NULL AFTER qSignal;
+
+ALTER TABLE cihdb.tb_youtube_sermon ADD tag varchar(500) NULL;
+ALTER TABLE cihdb.tb_youtube_sermon CHANGE tag tag varchar(500) NULL AFTER shorts;
+
+ALTER TABLE cihdb.tb_youtube_pastor ADD tag varchar(500) NULL;
+ALTER TABLE cihdb.tb_youtube_pastor CHANGE tag tag varchar(500) NULL AFTER shorts;
+
+ALTER TABLE cihdb.tb_youtube_celeb  ADD tag varchar(500) NULL;
+ALTER TABLE cihdb.tb_youtube_celeb  CHANGE tag tag varchar(500) NULL AFTER shorts;
+
+ALTER TABLE cihdb.tb_youtube_faith  ADD tag varchar(500) NULL;
+ALTER TABLE cihdb.tb_youtube_faith  CHANGE tag tag varchar(500) NULL AFTER shorts;
+
+ALTER TABLE cihdb.tb_shorts_ccm  ADD tag varchar(500) NULL;
+ALTER TABLE cihdb.tb_shorts_ccm  CHANGE tag tag varchar(500) NULL AFTER shorts;
+
+commit;

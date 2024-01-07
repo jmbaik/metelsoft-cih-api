@@ -14,6 +14,12 @@ import java.util.List;
 public class AppService {
     private final AppMapper mapper;
 
+    public List<YoutubeVideoDto> selectMainCcm(HashMap<String, Object> map){
+        return mapper.selectMainCcm(map);
+    }
+    public List<YoutubeVideoDto> selectMainSermon(HashMap<String, Object> map){
+        return mapper.selectMainSermon(map);
+    }
     public List<YoutubeVideoDto> selectMainPastor(HashMap<String, Object> map){
         return mapper.selectMainPastor(map);
     }

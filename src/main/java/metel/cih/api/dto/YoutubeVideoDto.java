@@ -25,6 +25,7 @@ public class YoutubeVideoDto {
     private int itemNo;
     private String qSignal;
     private String shorts = "N";
+    private String tag;
     private String userId;
     private String updDt;
     private int likes;

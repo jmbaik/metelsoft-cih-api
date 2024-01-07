@@ -23,11 +23,29 @@ public class AppController {
     private final AppService service;
 
     @ResponseBody
+    @GetMapping("/main-ccm")
+    public ResponseDto<List<YoutubeVideoDto>> getMainCcm() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("any", "any");
+          List<YoutubeVideoDto> list = service.selectMainCcm(map);
+        return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
+    @GetMapping("/main-sermon")
+    public ResponseDto<List<YoutubeVideoDto>> getMainSermon() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("any", "any");
+          List<YoutubeVideoDto> list = service.selectMainSermon(map);
+        return ApiResponse.Success(list);
+    }
+
+    @ResponseBody
     @GetMapping("/main-pastor")
     public ResponseDto<List<YoutubeVideoDto>> getMainPastor() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("any", "any");
-          List<YoutubeVideoDto> list = service.selectMainPastor(map);
+        List<YoutubeVideoDto> list = service.selectMainPastor(map);
         return ApiResponse.Success(list);
     }
 
