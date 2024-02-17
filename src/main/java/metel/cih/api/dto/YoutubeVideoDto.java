@@ -30,4 +30,5 @@ public class YoutubeVideoDto {
     private String updDt;
     private int likes;
     private int hates;
+    private String mainYn;
 }
