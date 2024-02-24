@@ -141,6 +141,7 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setItemNo(request.getLastItemNo() + 1);
             youtubeVideoDto.setQSignal(CommonUtils.getQSignal(request));
             youtubeVideoDto.setUserId(request.getUserId());
+            youtubeVideoDto.setMainYn("N");
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
     }
@@ -190,6 +191,7 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setItemNo(itemNo + 1);
             youtubeVideoDto.setQSignal(channelId + "-" + category + "-" + playlistId);
             youtubeVideoDto.setUserId(userId);
+            youtubeVideoDto.setMainYn("N");
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
         mergeYoutubeVideoToTables(category, youtubeVideoDtoList);
@@ -288,6 +290,7 @@ public class YoutubeDataApiController {
             youtubeVideoDto.setItemNo(itemNo + 1);
             youtubeVideoDto.setQSignal(channelId + "-" + category + "-" + q);
             youtubeVideoDto.setUserId(userId);
+            youtubeVideoDto.setMainYn("N");
             youtubeVideoDtoList.add(youtubeVideoDto);
         }
         mergeYoutubeVideoToTables(category, youtubeVideoDtoList);
@@ -392,6 +395,7 @@ public class YoutubeDataApiController {
                 youtubeVideoDto.setTotalResults(totalResults);
                 youtubeVideoDto.setItemNo(itemNo + 1);
                 youtubeVideoDto.setUserId(userId);
+                youtubeVideoDto.setMainYn("N");
                 youtubeVideoDtoList.add(youtubeVideoDto);
             }
             mergeYoutubeVideoToTables(category, youtubeVideoDtoList);

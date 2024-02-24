@@ -387,20 +387,20 @@
         (vid, p_code, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
             , grade, sort, description, create_ymd, publishedAt
             , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
-            , regid, regdt, updid, upddt)
+            , regid, regdt, updid, upddt, main_yn)
         values ( #{vid}, #{pastorCode}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
             , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
             , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
-            , #{userId}, now(), #{userId}, now())
+            , #{userId}, now(), #{userId}, now(), #{mainYn})
         ON DUPLICATE KEY UPDATE p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
-            , updid=#{userId}, upddt=current_timestamp()
+            , updid=#{userId}, upddt=current_timestamp(), main_yn=#{mainYn}
     </insert>
     <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         UPDATE tb_youtube_pastor
         SET p_code=#{pastorCode}, channel_id=#{channelId}, title=#{title}
             , channel_title=#{channelTitle}, thumbnail_d=#{thumbnailDefault}, thumbnail_m=#{thumbnailMedium}, thumbnail_h=#{thumbnailHigh}
             , grade=#{grade}, sort=#{sort}, description= #{description}
-            , updid=#{userId}, upddt=current_timestamp()
+            , updid=#{userId}, upddt=current_timestamp(), main_yn=#{mainYn}
         WHERE vid=#{vid}
     </update>
     <update id="deleteYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
