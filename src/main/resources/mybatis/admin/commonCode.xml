@@ -6,6 +6,16 @@
         order by alias_code
     </select>
 
+    <update id="mergeAreaCode" parameterType="metel.cih.api.dto.AreaCodeDto">
+        INSERT INTO tb_area_code (a_code, name, alias_code)
+        VALUES(#{areaCode}, #{name}, #{aliasCode})
+        ON DUPLICATE KEY UPDATE name=#{name}, alias_code=#{aliasCode}
+    </update>
+
+    <delete id="deleteAreaCode" parameterType="String">
+        DELETE FROM tb_area_code WHERE a_code=#{areaCode};
+    </delete>
+
     <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
         SELECT c_code as churchCode, substr(c_code,1,1) as areaCode, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt
         FROM tb_church_code

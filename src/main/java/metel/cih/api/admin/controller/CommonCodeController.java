@@ -27,6 +27,20 @@ public class CommonCodeController {
     }
 
     @ResponseBody
+    @PutMapping("/area-code")
+    public ResponseDto<Integer> mergeAreaCode(@RequestBody AreaCodeDto areaCodeDto){
+        Integer result = service.mergeAreaCode(areaCodeDto);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/area-code")
+    public ResponseDto<Integer> deleteAreaCode(@RequestBody String areaCode){
+        Integer result = service.deleteAreaCode(areaCode);
+        return ApiResponse.Success(result);
+    }
+
+    @ResponseBody
     @GetMapping("/church-code")
     public ResponseDto<List<ChurchCodeDto>> getChurchCode() {
         List<ChurchCodeDto> list = service.selectChurchCode();

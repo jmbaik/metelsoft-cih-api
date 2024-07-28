@@ -15,6 +15,8 @@ public interface CommonCodeMapper {
     List<ChurchCodeDto> selectChurchCode();
     List<PastorDto> selectPastor();
 
+    int mergeAreaCode(AreaCodeDto dto) ;
+    int deleteAreaCode(String areaCode);
     int insertChurchCode(ChurchCodeDto dto);
     int updateChurchCode(ChurchCodeDto dto);
     int deleteChurchCode(ChurchCodeDto dto);
