@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class ChurchCodeDto {
     private String areaCode;
+    private String areaName;
     private String churchCode;
     private String name;
     private String comment;

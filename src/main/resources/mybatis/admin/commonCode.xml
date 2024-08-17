@@ -17,9 +17,10 @@
     </delete>
 
     <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
-        SELECT c_code as churchCode, substr(c_code,1,1) as areaCode, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt
-        FROM tb_church_code
-        order by upd_dt desc
+        SELECT a.c_code as churchCode, substr(a.c_code,1,1) as areaCode, b.name as areaName, a.name, a.comment, a.pic,
+            a.reg_id as regId, a.reg_dt as regDt, a.upd_id as updId, a.upd_dt as updDt
+        FROM tb_church_code a inner join tb_area_code b on substr(a.c_code,1,1) = b.alias_code
+        order by a.upd_dt desc
     </select>
 
     <insert id="insertChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
