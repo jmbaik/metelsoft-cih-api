@@ -27,12 +27,12 @@
         INSERT INTO tb_church_code
         (c_code, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
         select concat(#{areaCode}, lpad(cast(substring(ifnull(max(c_code),'Z0000'), 2) as unsigned)+1, 4, '0')) as c_code
-            , #{name}, #{comment}, #{pic}, #{userId}, now(), #{userId}, now()
+            , #{name}, #{comment}, #{pic}, #{regId}, now(), #{updId}, now()
         from tb_church_code where substring(c_code, 1, 1) = #{areaCode}
     </insert>
 
     <update id="updateChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
-        update tb_church_code set name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{userId}, upd_dt=now()
+        update tb_church_code set name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{updId}, upd_dt=now()
         where c_code = #{churchCode}
     </update>
 
@@ -52,12 +52,12 @@
         INSERT INTO tb_pastor
         (p_code, c_code, grade, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
         select concat('P', lpad(cast(substring(ifnull(max(p_code), 'P000000'),2) as unsigned)+1, 6, '0')) as pastorCode
-            , #{churchCode}, #{grade}, #{name}, #{comment}, #{pic}, #{userId}, now(), #{userId}, now()
+            , #{churchCode}, #{grade}, #{name}, #{comment}, #{pic}, #{regId}, now(), #{updId}, now()
         from tb_pastor
     </insert>
 
     <update id="updatePastor" parameterType="metel.cih.api.dto.PastorDto" >
-        update tb_pastor set grade=#{grade}, name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{userId}, upd_dt=now()
+        update tb_pastor set grade=#{grade}, name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{updId}, upd_dt=now()
         where p_code = #{pastorCode}
     </update>
 
