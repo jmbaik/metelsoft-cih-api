@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.admin.mapper.AdminUserMapper">
+
+    <select id="selectAdminLoginInfo" resultType="metel.cih.api.dto.AdminUserDto" parameterType="metel.cih.api.dto.AdminUserDto">
+        select a.uid, a.email, a.phone, a.password, a.admin_level as adminLevel
+            , a.c_code as churchCode, a.name, a.nickname as nickName, a.comment
+            , a.pic, a.token, b.name as churchName, b.pic as churchPic
+            , a.upddate as updDate
+        FROM tb_admins a LEFT OUTER JOIN tb_church_code b on a.c_code = b.c_code
+        where 1=1
+        <if test='email != null and email != ""'>
+            and a.email = #{email}
+        </if>
+        <if test='phone != null and phone != ""'>
+            and a.phone = #{phone}
+        </if>
+        <if test='password != null and password != ""'>
+            and a.password = #{password}
+        </if>
+    </select>
+
+</mapper>

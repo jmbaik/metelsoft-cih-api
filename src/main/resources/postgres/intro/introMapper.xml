@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.intro.mapper.IntroMapper">
+    <select id="selectIntroList" resultType="metel.cih.api.dto.IntroDto" parameterType="hashmap">
+        SELECT c_code, opt, seq, pic, cont_text, regdate, regid, upddate, updid
+        FROM salem.intro
+        WHERE 1=1
+        AND c_code = #{cCode}
+        AND opt = #{opt}
+        <if test='seq != null and seq != ""'>
+            and seq = #{seq}
+        </if>
+        order by seq
+    </select>
+
+    <select id="selectAreaCode" resultType="metel.cih.api.dto.AreaCodeDto">
+        SELECT code, name, alias_code as aliasCode
+        FROM salem.area_code
+    </select>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.admin.mapper.CommonCodeMapper">
+    <select id="selectAreaCode" resultType="metel.cih.api.dto.AreaCodeDto" parameterType="hashmap">
+        select a_code as areaCode, name, alias_code as aliasCode from tb_area_code
+        order by alias_code
+    </select>
+
+    <update id="mergeAreaCode" parameterType="metel.cih.api.dto.AreaCodeDto">
+        insert into tb_area_code (a_code, name, alias_code)
+        values(#{areaCode}, #{name}, #{aliasCode})
+        on CONFLICT(a_code) do update set name=#{name}, alias_code = #{aliasCode}
+    </update>
+
+    <delete id="deleteAreaCode" parameterType="String">
+        DELETE FROM tb_area_code WHERE a_code=#{areaCode};
+    </delete>
+
+    <select id="selectChurchCode" resultType="metel.cih.api.dto.ChurchCodeDto" parameterType="hashmap">
+        SELECT a.c_code as churchCode, substr(a.c_code,1,1) as areaCode, b.name as areaName, a.name, a.comment, a.pic,
+            a.reg_id as regId, a.reg_dt as regDt, a.upd_id as updId, a.upd_dt as updDt
+        FROM tb_church_code a inner join tb_area_code b on substr(a.c_code,1,1) = b.alias_code
+        order by a.upd_dt desc
+    </select>
+
+    <insert id="insertChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        INSERT INTO tb_church_code
+        (c_code, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
+        select concat(#{areaCode}, lpad(cast(substring(COALESCE(max(c_code),'Z0000'), 2) as unsigned)+1, 4, '0')) as c_code
+            , #{name}, #{comment}, #{pic}, #{regId}, now(), #{updId}, now()
+        from tb_church_code where substring(c_code, 1, 1) = #{areaCode}
+    </insert>
+
+    <update id="updateChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        update tb_church_code set name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{updId}, upd_dt=now()
+        where c_code = #{churchCode}
+    </update>
+
+    <delete id="deleteChurchCode" parameterType="metel.cih.api.dto.ChurchCodeDto">
+        delete from tb_church_code where c_code = #{churchCode}
+    </delete>
+
+    <select id="selectPastor" resultType="metel.cih.api.dto.PastorDto" parameterType="hashmap">
+        SELECT a.p_code as pastorCode, a.c_code as churchCode, a.grade, a.name, a.comment, a.pic
+            , b.name as churchName
+            , a.reg_id as regId, a.reg_dt as regDt, a.upd_id as updId, a.upd_dt as updDt
+        FROM tb_pastor a left join tb_church_code b on a.c_code = b.c_code
+        order by a.upd_dt desc
+    </select>
+
+    <insert id="insertPastor" parameterType="metel.cih.api.dto.PastorDto" >
+        INSERT INTO tb_pastor
+        (p_code, c_code, grade, name, comment, pic, reg_id, reg_dt, upd_id, upd_dt)
+        select concat('P', lpad(cast(substring(COALESCE(max(p_code), 'P000000'),2) as unsigned)+1, 6, '0')) as pastorCode
+            , #{churchCode}, #{grade}, #{name}, #{comment}, #{pic}, #{regId}, now(), #{updId}, now()
+        from tb_pastor
+    </insert>
+
+    <update id="updatePastor" parameterType="metel.cih.api.dto.PastorDto" >
+        update tb_pastor set grade=#{grade}, name=#{name}, comment=#{comment}, pic=#{pic}, upd_id=#{updId}, upd_dt=now()
+        where p_code = #{pastorCode}
+    </update>
+
+    <delete id="deletePastor" parameterType="metel.cih.api.dto.PastorDto" >
+        delete from tb_pastor where p_code = #{pastorCode}
+    </delete>
+
+</mapper>

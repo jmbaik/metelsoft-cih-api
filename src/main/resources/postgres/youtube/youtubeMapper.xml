@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.youtube.mapper.YoutubeMapper">
+
+    <!-- youtube faith part -->
+    <select id="selectYoutubeFaith" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt, a.main_yn as mainYn
+        FROM tb_youtube_faith a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        <if test='shorts != null and shorts != ""'>
+            AND a.shorts = #{shorts}
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_faith
+        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, updid, main_yn)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid)
+        do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </update>
+    <update id="deleteYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_faith set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_faith where vid = #{vid}
+    </delete>
+    <!--    end youtube faith part -->
+
+    <!-- youtube Mercy part -->
+    <select id="selectShortsCcm" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt, a.main_yn as mainYn
+        FROM tb_shorts_ccm a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_shorts_ccm
+        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, updid, main_yn)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid)
+        do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </update>
+    <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_shorts_ccm set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_shorts_ccm where vid = #{vid}
+    </delete>
+    <!--    end youtube Mercy part -->
+
+    <!-- youtube Mercy part -->
+    <select id="selectYoutubeMercy" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt, a.main_yn as mainYn
+        FROM tb_youtube_mercy a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_mercy
+        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, updid, main_yn)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </update>
+    <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_mercy set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_mercy where vid = #{vid}
+    </delete>
+    <!--    end youtube Mercy part -->
+
+    <!-- youtube sermon part -->
+    <select id="selectYoutubeSermon" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt, main_yn as mainYn
+        FROM tb_youtube_sermon a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_sermon
+        (vid, channel_id, title, channel_title, thumbnail_d, p_code, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, updid, main_yn)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{pastorCode}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </update>
+    <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_sermon set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_sermon where vid = #{vid}
+    </delete>
+    <!--    end youtube sermon part -->
+
+    <!-- youtube celeb part -->
+    <select id="selectYoutubeCeleb" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.title, a.create_ymd as createYmd, a.grade, a.sort
+        , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+        , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+        , a.regid as userId, a.upddt as updDt, a.main_yn as mainYn
+        FROM tb_youtube_celeb a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <update id="mergeYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_celeb
+        (vid, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+        , grade, sort, description, create_ymd, publishedAt
+        , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+        , regid, updid, main_yn)
+        values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+        , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </update>
+    <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_celeb set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_celeb where vid = #{vid}
+    </delete>
+    <!--    end youtube celeb part -->
+
+    <select id="selectYoutubePastor" resultType="metel.cih.api.dto.YoutubeVideoDto" parameterType="hashmap">
+        SELECT a.vid, a.p_code as pastorCode, c.name as pastorName, a.title, a.create_ymd as createYmd, a.grade, a.sort
+            , a.channel_id as channelId, b.title as channelTitle, a.thumbnail_d as thumbnailDefault
+            , a.thumbnail_m as thumbnailMedium, a.thumbnail_h as thumbnailHigh, a.publishedAt, a.shorts, a.qSignal
+            , a.regid as userId, a.upddt as updDt, a.main_yn as mainYn
+        FROM tb_youtube_pastor a inner join tb_origin_vid b on a.channel_id = b.channel_id
+        inner join tb_pastor c on a.p_code = c.p_code
+        where 1=1
+        and a.del_yn = 'N'
+        <if test='channelId != null and channelId != ""'>
+            AND a.channel_id = #{channelId}
+        </if>
+        <if test='options != null and options == "title"'>
+            AND a.title like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "name"'>
+            AND c.name like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='options != null and options == "vid"'>
+            AND a.vid like concat('%', nullif(#{keyword}, ''), '%')
+        </if>
+        <if test='qSignal != null and qSignal != ""'>
+            AND a.qSignal like concat('%', nullif(#{qSignal}, ''), '%')
+        </if>
+        order by a.upddt desc
+        <if test='options != null and options == "time"'>
+            LIMIT 50
+        </if>
+    </select>
+    <insert id="mergeYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        INSERT INTO tb_youtube_pastor
+        (vid, p_code, channel_id, title, channel_title, thumbnail_d, thumbnail_m, thumbnail_h
+            , grade, sort, description, create_ymd, publishedAt
+            , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
+            , regid, updid, main_yn)
+        values ( #{vid}, #{pastorCode}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
+            , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+            , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
+            , #{userId}, #{userId}, #{mainYn})
+        on conflict(vid) do update set p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+            , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+    </insert>
+    <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        UPDATE tb_youtube_pastor
+        SET p_code=#{pastorCode}, channel_id=#{channelId}, title=#{title}
+            , channel_title=#{channelTitle}, thumbnail_d=#{thumbnailDefault}, thumbnail_m=#{thumbnailMedium}, thumbnail_h=#{thumbnailHigh}
+            , grade=#{grade}, sort=#{sort}, description= #{description}
+            , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
+        WHERE vid=#{vid}
+    </update>
+    <update id="deleteYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        update tb_youtube_pastor set del_yn = 'Y', updid=#{userId}, upddt=now()  WHERE vid=#{vid}
+    </update>
+    <delete id="deleteRealDataYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
+        delete from tb_youtube_pastor where vid = #{vid}
+    </delete>
+
+    <!--    origin vid -->
+    <select id="selectOriginVid" resultType="metel.cih.api.dto.OriginVidDto" parameterType="hashmap">
+        select concat((y1+y2+y3+y4+y5), '  P:', y1, ' C:', y2, ' S:', y3, ' F:', y4, ' M:', y5) as itemsCount, m.*
+        from (
+            SELECT a.channel_id as channelId, a.title as channelTitle, a.description as channelDescription
+                , concat(substr(a.description,1, 100), '...') as shortDescription, a.regid as userId, a.updid as updId,  a.upddt as updDt
+                , (select count(0) from tb_youtube_pastor b where b.channel_id = a.channel_id) as y1
+                , (select count(0) from tb_youtube_celeb  b where b.channel_id = a.channel_id) as y2
+                , (select count(0) from tb_youtube_sermon b where b.channel_id = a.channel_id) as y3
+                , (select count(0) from tb_youtube_faith  b where b.channel_id = a.channel_id) as y4
+                , (select count(0) from tb_shorts_ccm  b where b.channel_id = a.channel_id) as y5
+            FROM tb_origin_vid a
+            where 1=1
+        <if test='channelTitle != null and channelTitle != ""'>
+            and a.title like concat('%', #{channelTitle}, '%')
+        </if>
+        ) m
+        order by m.upddt desc
+    </select>
+
+    <insert id="mergeOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
+        INSERT INTO tb_origin_vid
+            (channel_id, title, description, regid, updid)
+        values (#{channelId}, #{channelTitle}, #{channelDescription}, #{userId}, #{userId})
+        on conflict(channel_id) do update set updid=#{userId}, upddt= now()
+    </insert>
+    <update id="updateOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
+        UPDATE tb_origin_vid
+        SET title=#{channelTitle}, description=#{channelDescription}, updid=#{userId}, upddt=now()
+        WHERE channel_id=#{channelId}
+    </update>
+    <delete id="deleteOriginVid" parameterType="metel.cih.api.dto.OriginVidDto">
+        DELETE FROM tb_origin_vid WHERE channel_id=#{channelId}
+    </delete>
+
+<!--    youtube data api 에러 체크 -->
+    <select id="countYoutubeDataExists" parameterType="metel.cih.api.dto.YoutubeRequestDto" resultType="int">
+        select count(0) from
+            <if test='category.equals("ccm")'>
+                tb_shorts_ccm
+            </if>
+            <if test='category.equals("pastor")'>
+                tb_youtube_pastor
+            </if>
+            <if test='category.equals("celeb")'>
+                tb_youtube_celeb
+            </if>
+            <if test='category.equals("mercy")'>
+                tb_youtube_mercy
+            </if>
+            <if test='category.equals("sermon")'>
+                tb_youtube_sermon
+            </if>
+        where 1=1
+        and prevPageToken = if(#{prevPageToken} is null or #{prevPageToken}='', '999', #{prevPageToken})
+        and nextPageToken = if(#{nextPageToken} is null or #{nextPageToken}='', '999', #{nextPageToken})
+    </select>
+</mapper>
