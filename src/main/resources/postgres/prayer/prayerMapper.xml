@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.prayer.mapper.PrayerMapper">
+    <select id="selectDogoPrayer" resultType="metel.cih.api.dto.DogoPrayer" parameterType="hashmap">
+        select a.ym, a.cat, a.prayer, a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
+        from tb_dogo_prayer a
+        <if test='ym != null and ym != ""'>
+            and ym like concat('%', #{ym}, '%')
+        </if>
+        <if test='cat != null and cat != ""'>
+            and cat = #{cat}
+        </if>
+        <if test='prayer != null and prayer != ""'>
+            and prayer like concat('%', #{prayer}, '%')
+        </if>
+        order by a.ym, a.cat
+    </select>
+
+    <update id="mergeDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
+        INSERT INTO tb_dogo_prayer
+        (ym, cat, prayer, regid, regdt, updid, upddt)
+        VALUES(#{ym}, #{cat}, #{prayer}, #{regId}, now(), #{updId}, now())
+        on conflict(ym, cat) do update set prayer=#{prayer}, updid=#{updId}, upddt=now()
+    </update>
+
+    <delete id="deleteDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
+        DELETE FROM tb_dogo_prayer
+        WHERE ym=#{ym} and cat=#{cat}
+    </delete>
+
+    <select id="selectUserPrayer" resultType="metel.cih.api.dto.UserPrayer" parameterType="hashmap">
+        SELECT a.pseq as pSeq, a.uid, a.start_dt as startDt, a.end_dt as endDt, a.prayer, a.regdt as regDt, a.upddt as updDt
+        FROM tb_user_prayer a
+        <if test='uid != null and uid != ""'>
+            and a.uid like concat('%', #{uid}, '%')
+        </if>
+        <if test='startDt != null and startDt != ""'>
+            <![CDATA[ and a.start_dt >= #{startDt} ]]>
+        </if>
+        <if test='endDt != null and endDt != ""'>
+            <![CDATA[ and a.end_dt <= #{endDt} ]]>
+        </if>
+        <if test='prayer != null and prayer != ""'>
+            and prayer like concat('%', #{prayer}, '%')
+        </if>
+        order by a.pseq desc
+    </select>
+
+    <update id="mergeUserPrayer" parameterType="metel.cih.api.dto.UserPrayer">
+        <choose>
+            <when test='pSeq != null and pSeq != ""'>
+                INSERT INTO tb_user_prayer
+                (uid, start_dt, end_dt, prayer, regdt, upddt)
+                VALUES(#{uid}, #{startDt}, #{endDt}, #{prayer}, now(), now())
+            </when>
+            <otherwise>
+                UPDATE tb_user_prayer
+                SET uid=#{uid}, start_dt=#{startDt}, end_dt=#{endDt}, prayer=#{prayer}, upddt=now()
+                WHERE pseq=#{pSeq}
+            </otherwise>
+        </choose>
+    </update>
+
+    <delete id="deleteUserPrayer" parameterType="metel.cih.api.dto.UserPrayer">
+        DELETE FROM tb_user_prayer
+        WHERE pseq=#{pSeq}
+    </delete>
+</mapper>

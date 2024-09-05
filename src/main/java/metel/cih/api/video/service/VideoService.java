@@ -23,7 +23,7 @@ public class VideoService {
         return mapper.getSeqVideo();
     }
     public int saveVideoClip(VideoDto videoDto){
-        if(StringUtils.isEmpty(videoDto.getVid())){
+        if(videoDto.getVid() == null || videoDto.getVid().isEmpty()){
             return mapper.insertVideoClip(videoDto);
         } else {
             return mapper.updateVideoClip(videoDto);
