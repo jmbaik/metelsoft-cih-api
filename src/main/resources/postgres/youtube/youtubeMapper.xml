@@ -38,11 +38,11 @@
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, updid, main_yn)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, #{userId}, #{mainYn})
         on conflict(vid)
-        do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        do update set grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </update>
     <update id="deleteYoutubeFaith" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -86,11 +86,11 @@
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, updid, main_yn)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, #{userId}, #{mainYn})
         on conflict(vid)
-        do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        do update set grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </update>
     <update id="deleteShortsCcm" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -134,10 +134,10 @@
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, updid, main_yn)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, #{userId}, #{mainYn})
-        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        on conflict(vid) do update set grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </update>
     <update id="deleteYoutubeMercy" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -181,10 +181,10 @@
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, updid, main_yn)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{pastorCode}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, #{userId}, #{mainYn})
-        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        on conflict(vid) do update set grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </update>
     <update id="deleteYoutubeSermon" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -228,10 +228,10 @@
         , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
         , regid, updid, main_yn)
         values ( #{vid}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-        , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+        , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
         , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
         , #{userId}, #{userId}, #{mainYn})
-        on conflict(vid) do update set grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        on conflict(vid) do update set grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
         , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </update>
     <update id="deleteYoutubeCeleb" parameterType="metel.cih.api.dto.YoutubeVideoDto">
@@ -278,17 +278,17 @@
             , prevPageToken, nextPageToken, totalResults, itemNo, qSignal, shorts
             , regid, updid, main_yn)
         values ( #{vid}, #{pastorCode}, #{channelId}, #{title}, #{channelTitle}, #{thumbnailDefault}, #{thumbnailMedium}, #{thumbnailHigh}
-            , #{grade}, #{sort}, #{description}, date_format(now(), '%Y%m%d'), #{publishedAt}
+            , #{grade}, cast(#{sort} as integer), #{description}, to_char(now(), 'YYYYMMDD'), #{publishedAt}
             , #{prevPageToken}, #{nextPageToken}, #{totalResults}, #{itemNo}, #{qSignal}, #{shorts}
             , #{userId}, #{userId}, #{mainYn})
-        on conflict(vid) do update set p_code=#{pastorCode}, grade=#{grade}, sort=#{sort}, shorts=#{shorts}, qSignal=#{qSignal}
+        on conflict(vid) do update set p_code=#{pastorCode}, grade=#{grade}, sort=cast(#{sort} as integer), shorts=#{shorts}, qSignal=#{qSignal}
             , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
     </insert>
     <update id="updateYoutubePastor" parameterType="metel.cih.api.dto.YoutubeVideoDto">
         UPDATE tb_youtube_pastor
         SET p_code=#{pastorCode}, channel_id=#{channelId}, title=#{title}
             , channel_title=#{channelTitle}, thumbnail_d=#{thumbnailDefault}, thumbnail_m=#{thumbnailMedium}, thumbnail_h=#{thumbnailHigh}
-            , grade=#{grade}, sort=#{sort}, description= #{description}
+            , grade=#{grade}, sort=cast(#{sort} as integer), description= #{description}
             , updid=#{userId}, upddt=now(), main_yn=#{mainYn}
         WHERE vid=#{vid}
     </update>

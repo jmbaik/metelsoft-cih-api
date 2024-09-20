@@ -16,6 +16,7 @@ import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.api.services.youtube.model.SearchListResponse;
 import lombok.extern.slf4j.Slf4j;
 import metel.cih.api.dto.YoutubeVideoDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +36,10 @@ public class YoutubeDataApiService {
     /** Global instance of the max number of videos we want returned (50 = upper limit per page). */
     private static final long NUMBER_OF_VIDEOS_RETURNED = 50;
     /** Global instance of Youtube object to make all API requests. */
-//    private static final String YOUTUBE_API_KEY = "AIzaSyCU6n82YBGi7Q3cFPScwqUtPI4q3-oxDXc";
-    private static final String YOUTUBE_API_KEY = "AIzaSyBiLtIN06CXDJ_fsp6mEe0njdZ_tfUbBsU";
+    //    private static final String YOUTUBE_API_KEY = "AIzaSyCU6n82YBGi7Q3cFPScwqUtPI4q3-oxDXc";
+
+    @Value("${youtube.api.key}")
+    private String YOUTUBE_API_KEY;
 
     public static YouTube getService() throws IOException{
         return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
