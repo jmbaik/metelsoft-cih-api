@@ -10,8 +10,7 @@ public class ReadingBible {
     private String refBasic;
     private String refPoint;
     private String overview;
-    private String excDt;
-    private String endDt;
+    private String bible;
     private String regId;
     private String regDt;
     private String updId;

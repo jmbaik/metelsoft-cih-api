@@ -4,7 +4,7 @@
     <select id="selectReadingBible" resultType="metel.cih.api.dto.ReadingBible" parameterType="hashmap">
         select a.seq_reading as seqReading
         , a.subject, a.ref_basic as refBasic, a.ref_point as ref_point
-        , a.overview, a.exc_dt as excDt, a.end_dt as endDt
+        , a.overview, a.bible
         , a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
         from tb_reading_bible a
         where 1=1
@@ -14,22 +14,19 @@
         <if test='overview != null and overview != ""'>
             and overview like concat('%', #{overview}, '%')
         </if>
-        <if test='excDt != null and excDt != ""'>
-            and excDt like concat('%', #{excDt}, '%')
-        </if>
         order by seq_reading desc
     </select>
 
     <insert id="insertReadingBible" parameterType="metel.cih.api.dto.ReadingBible">
         INSERT INTO tb_reading_bible
-        (seq_reading, subject, ref_basic, ref_point, overview, exc_dt, end_dt, regid, regdt, updid, upddt)
-        VALUES(#{seqReading}, #{subject}, #{refBasic}, #{refPoint}, #{overview}, #{excDt}, #{endDt}, #{regId}, now(), #{updId}, now())
+        (seq_reading, subject, ref_basic, ref_point, overview, bible, regid, regdt, updid, upddt)
+        VALUES(#{seqReading}, #{subject}, #{refBasic}, #{refPoint}, #{overview}, #{bible}, #{regId}, now(), #{updId}, now())
     </insert>
 
     <update id="updateReadingBible" parameterType="metel.cih.api.dto.ReadingBible">
         UPDATE tb_reading_bible
         SET subject=#{subject}, ref_basic=#{refBasic}, ref_point=#{refPoint}, overview=#{overview}
-            , exc_dt=#{excDt}, end_dt=#{endDt}, updid=#{updId}, upddt=now()
+            bible = #{bible}, updid=#{updId}, upddt=now()
         WHERE seq_reading=#{seqReading}
     </update>
 
