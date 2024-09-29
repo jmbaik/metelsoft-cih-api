@@ -8,6 +8,9 @@
         , a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
         from tb_reading_bible a
         where 1=1
+        <if test='seqReading != null and seqReading > -1'>
+            and seq_reading = #{seqReading}
+        </if>
         <if test='subject != null and subject != ""'>
             and subject like concat('%', #{subject}, '%')
         </if>

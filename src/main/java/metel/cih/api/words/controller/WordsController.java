@@ -20,17 +20,18 @@ public class WordsController {
     @ResponseBody
     @GetMapping("/reading-bible")
     public ResponseDto<List<ReadingBible>> fetchReadingBible(
-            @RequestParam(value="subject", required = false) String subject
-            ,@RequestParam(value="overview", required = false) String overview
-            ,@RequestParam(value="excDt", required = false) String excDt
+            @RequestParam(value="seqReading", required = false) int seqReading
+            , @RequestParam(value="subject", required = false) String subject
+            , @RequestParam(value="overview", required = false) String overview
+
     ) {
         HashMap<String, Object> map = new HashMap<>();
+        if(seqReading > -1)
+            map.put("seqReading", seqReading);
         if(!subject.isEmpty())
             map.put("subject", subject);
         if(!overview.isEmpty())
             map.put("overview", overview);
-        if(!excDt.isEmpty())
-            map.put("excDt", excDt);
         List<ReadingBible> list = service.selectReadingBible(map);
         return ApiResponse.Success(list);
     }
