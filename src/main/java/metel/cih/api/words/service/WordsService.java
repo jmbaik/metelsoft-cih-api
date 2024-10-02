@@ -16,9 +16,11 @@ public class WordsService {
     public List<ReadingBible> selectReadingBible(HashMap<String, Object> map) {
         return mapper.selectReadingBible(map);
     }
-
     public int insertReadingBible(ReadingBible dto){
         return mapper.insertReadingBible(dto);
+    }
+    public int mergeReadingBible(ReadingBible dto){
+        return mapper.mergeReadingBible(dto);
     }
     public int updateReadingBible(ReadingBible dto){
         return mapper.updateReadingBible(dto);

@@ -38,8 +38,8 @@ public class WordsController {
 
     @ResponseBody
     @PostMapping("/reading-bible")
-    public ResponseDto<Integer> insertReadingBible(@RequestBody ReadingBible dto){
-        int result = service.insertReadingBible(dto);
+    public ResponseDto<Integer> mergeReadingBible(@RequestBody ReadingBible dto){
+        int result = service.mergeReadingBible(dto);
         return ApiResponse.Success(result);
     }
 

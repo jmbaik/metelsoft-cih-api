@@ -3,9 +3,10 @@
 <mapper namespace="metel.cih.api.words.mapper.WordsMapper">
     <select id="selectReadingBible" resultType="metel.cih.api.dto.ReadingBible" parameterType="hashmap">
         select a.seq_reading as seqReading
-        , a.subject, a.ref_basic as refBasic, a.ref_point as ref_point
+        , a.subject, a.ref_basic as refBasic, a.ref_point as refPoint
         , a.overview, a.bible
-        , a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
+        , a.regid as regId, to_char(a.regdt, 'YYYY-MM-DD HH24:MI:SS') as regDt
+        , a.updid as updId, to_char(a.upddt, 'YYYY-MM-DD HH24:MI:SS') as updDt
         from tb_reading_bible a
         where 1=1
         <if test='seqReading != null and seqReading > -1'>
@@ -25,6 +26,14 @@
         (seq_reading, subject, ref_basic, ref_point, overview, bible, regid, regdt, updid, upddt)
         VALUES(#{seqReading}, #{subject}, #{refBasic}, #{refPoint}, #{overview}, #{bible}, #{regId}, now(), #{updId}, now())
     </insert>
+
+    <update id="mergeReadingBible" parameterType="metel.cih.api.dto.ReadingBible">
+        INSERT INTO tb_reading_bible
+        (seq_reading, subject, ref_basic, ref_point, overview, bible, regid, regdt, updid, upddt)
+        VALUES(#{seqReading}, #{subject}, #{refBasic}, #{refPoint}, #{overview}, #{bible}, #{regId}, now(), #{updId}, now())
+        on conflict(seq_reading) do update set subject=#{subject}, ref_basic=#{refBasic}, ref_point=#{refPoint}, overview=#{overview}, bible=#{bible}
+        , updid=#{updId}, upddt=now()
+    </update>
 
     <update id="updateReadingBible" parameterType="metel.cih.api.dto.ReadingBible">
         UPDATE tb_reading_bible

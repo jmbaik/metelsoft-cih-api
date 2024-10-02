@@ -10,6 +10,7 @@ import java.util.List;
 public interface WordsMapper {
     List<ReadingBible> selectReadingBible(HashMap<String, Object> map);
     int insertReadingBible(ReadingBible readingBible);
+    int mergeReadingBible(ReadingBible readingBible);
     int updateReadingBible(ReadingBible readingBible);
     int deleteReadingBible(ReadingBible readingBible);
 }
