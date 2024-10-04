@@ -38,7 +38,7 @@ public class PrayerController {
 
     @ResponseBody
     @PostMapping("/dogo-prayer")
-    public ResponseDto<Integer> mergeDogoPrayer(@RequestBody DogoPrayer dto){
+    public ResponseDto<Integer> mergeDogoPrayer(@RequestBody DogoPrayer dto) {
         int result = service.mergeDogoPrayer(dto);
         return ApiResponse.Success(result);
     }
@@ -51,11 +51,14 @@ public class PrayerController {
     }
 
     @ResponseBody
-    @PostMapping("/dogo-prayers")
-    public ResponseDto<Integer> mergeDogoPrayers(@RequestBody List<DogoPrayer> list){
+    @PostMapping("/dogo-prayer/cat")
+    public ResponseDto<Integer> saveDogoPrayer(@RequestBody List<DogoPrayer> dtoList) {
         int result =0;
-        for (DogoPrayer dto : list) {
-            result += service.mergeDogoPrayer(dto);
+        DogoPrayer dto = dtoList.get(0);
+        service.deleteDogoPrayerByCat(dto);
+
+        for (DogoPrayer dogoPrayer : dtoList) {
+            result += service.mergeDogoPrayer(dogoPrayer);
         }
         return ApiResponse.Success(result);
     }

@@ -14,6 +14,8 @@ public interface PrayerMapper {
     int mergeDogoPrayer(DogoPrayer dto);
 
     int deleteDogoPrayer(DogoPrayer dto);
+    
+    int deleteDogoPrayerByCat(DogoPrayer dto);
 
     List<UserPrayer> selectUserPrayer(HashMap<String, Object> map);
 

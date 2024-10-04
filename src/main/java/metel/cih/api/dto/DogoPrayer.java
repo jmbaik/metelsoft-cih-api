@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class DogoPrayer {
     private String ym;
+    private int pSeq;
     private int cat;
     private String prayer;
     private String regId;

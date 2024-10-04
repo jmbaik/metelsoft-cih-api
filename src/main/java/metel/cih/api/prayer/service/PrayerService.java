@@ -26,6 +26,10 @@ public class PrayerService {
         return mapper.deleteDogoPrayer(dto);
     }
 
+    public int deleteDogoPrayerByCat(DogoPrayer dto) {
+        return mapper.deleteDogoPrayerByCat(dto);
+    }
+
     public List<UserPrayer> selectUserPrayer(HashMap<String, Object> map) {
         return mapper.selectUserPrayer(map);
     }

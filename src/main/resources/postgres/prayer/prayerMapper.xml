@@ -13,17 +13,25 @@
         <if test='prayer != null and prayer != ""'>
             and prayer like concat('%', #{prayer}, '%')
         </if>
+        <if test='pSeq != null and pSeq > -1'>
+            and pseq = #{pSeq}
+        </if>
         order by a.ym, a.cat
     </select>
 
     <update id="mergeDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
         INSERT INTO tb_dogo_prayer
-        (ym, cat, prayer, regid, regdt, updid, upddt)
-        VALUES(#{ym}, #{cat}, #{prayer}, #{regId}, now(), #{updId}, now())
-        on conflict(ym, cat) do update set prayer=#{prayer}, updid=#{updId}, upddt=now()
+        (ym, pseq, cat, prayer, regid, regdt, updid, upddt)
+        VALUES(#{ym}, #{pSeq}, #{cat}, #{prayer}, #{regId}, now(), #{updId}, now())
+        on conflict(ym, pseq) do update set prayer=#{prayer}, updid=#{updId}, upddt=now()
     </update>
 
     <delete id="deleteDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
+        DELETE FROM tb_dogo_prayer
+        WHERE ym=#{ym} and pseq=#{pSeq}
+    </delete>
+
+    <delete id="deleteDogoPrayerByCat" parameterType="metel.cih.api.dto.DogoPrayer">
         DELETE FROM tb_dogo_prayer
         WHERE ym=#{ym} and cat=#{cat}
     </delete>
