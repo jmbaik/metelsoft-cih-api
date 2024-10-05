@@ -13,8 +13,8 @@
         <if test='prayer != null and prayer != ""'>
             and prayer like concat('%', #{prayer}, '%')
         </if>
-        <if test='pSeq != null and pSeq > -1'>
-            and pseq = #{pSeq}
+        <if test='prayerSeq != null and prayerSeq > -1'>
+            and pseq = #{prayerSeq}
         </if>
         order by a.ym, a.cat
     </select>
@@ -22,13 +22,13 @@
     <update id="mergeDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
         INSERT INTO tb_dogo_prayer
         (ym, pseq, cat, prayer, regid, regdt, updid, upddt)
-        VALUES(#{ym}, #{pSeq}, #{cat}, #{prayer}, #{regId}, now(), #{updId}, now())
+        VALUES(#{ym}, #{prayerSeq}, #{cat}, #{prayer}, #{regId}, now(), #{updId}, now())
         on conflict(ym, pseq) do update set prayer=#{prayer}, updid=#{updId}, upddt=now()
     </update>
 
     <delete id="deleteDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
         DELETE FROM tb_dogo_prayer
-        WHERE ym=#{ym} and pseq=#{pSeq}
+        WHERE ym=#{ym} and pseq=#{prayerSeq}
     </delete>
 
     <delete id="deleteDogoPrayerByCat" parameterType="metel.cih.api.dto.DogoPrayer">
@@ -64,13 +64,13 @@
             <otherwise>
                 UPDATE tb_user_prayer
                 SET uid=#{uid}, start_dt=#{startDt}, end_dt=#{endDt}, prayer=#{prayer}, upddt=now()
-                WHERE pseq=#{pSeq}
+                WHERE pseq=#{prayerSeq}
             </otherwise>
         </choose>
     </update>
 
     <delete id="deleteUserPrayer" parameterType="metel.cih.api.dto.UserPrayer">
         DELETE FROM tb_user_prayer
-        WHERE pseq=#{pSeq}
+        WHERE pseq=#{prayerSeq}
     </delete>
 </mapper>
