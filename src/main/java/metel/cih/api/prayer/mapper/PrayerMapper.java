@@ -11,6 +11,8 @@ import java.util.List;
 public interface PrayerMapper {
     List<DogoPrayer> selectDogoPrayer(HashMap<String, Object> map);
 
+    List<String> selectYmFromDogoPrayer();
+
     int mergeDogoPrayer(DogoPrayer dto);
 
     int deleteDogoPrayer(DogoPrayer dto);

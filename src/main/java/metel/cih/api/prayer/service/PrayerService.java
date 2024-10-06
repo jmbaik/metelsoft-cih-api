@@ -18,6 +18,10 @@ public class PrayerService {
         return mapper.selectDogoPrayer(map);
     }
 
+    public List<String> selectYmFromDogoPrayer(){
+        return mapper.selectYmFromDogoPrayer();
+    }
+
     public int mergeDogoPrayer(DogoPrayer dto){
         return mapper.mergeDogoPrayer(dto);
     }
@@ -26,8 +30,8 @@ public class PrayerService {
         return mapper.deleteDogoPrayer(dto);
     }
 
-    public int deleteDogoPrayerByCat(DogoPrayer dto) {
-        return mapper.deleteDogoPrayerByCat(dto);
+    public void deleteDogoPrayerByCat(DogoPrayer dto) {
+        mapper.deleteDogoPrayerByCat(dto);
     }
 
     public List<UserPrayer> selectUserPrayer(HashMap<String, Object> map) {

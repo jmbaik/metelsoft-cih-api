@@ -19,6 +19,10 @@
         order by a.ym, a.cat
     </select>
 
+    <select id="selectYmFromDogoPrayer" resultType="string">
+        select ym from tb_dogo_prayer a group by ym order by ym desc
+    </select>
+
     <update id="mergeDogoPrayer" parameterType="metel.cih.api.dto.DogoPrayer">
         INSERT INTO tb_dogo_prayer
         (ym, pseq, cat, prayer, regid, regdt, updid, upddt)
