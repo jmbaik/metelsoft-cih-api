@@ -45,7 +45,7 @@ public class PrayerController {
             @RequestParam(value = "ym", required = false) String ym
     ) {
         HashMap<String, Object> map = new HashMap<>();
-        if (!ym.isEmpty())
+        if (ym != null)
             map.put("ym", ym);
         List<DogoPrayer> list = service.selectDogoPrayer(map);
 
@@ -55,11 +55,16 @@ public class PrayerController {
             for (String _ym : ymList) {
                 DogoPrayerViewModel _vm = new DogoPrayerViewModel();
                 _vm.setYm(_ym);
-                _vm.setPrayerItems1(list.stream().filter(dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 1).collect(Collectors.toList()));
-                _vm.setPrayerItems2(list.stream().filter(dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 2).collect(Collectors.toList()));
-                _vm.setPrayerItems3(list.stream().filter(dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 3).collect(Collectors.toList()));
-                _vm.setPrayerItems4(list.stream().filter(dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 4).collect(Collectors.toList()));
-                _vm.setPrayerItems5(list.stream().filter(dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 5).collect(Collectors.toList()));
+                _vm.setPrayerItems1(list.stream().filter(
+                        dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 1).collect(Collectors.toList()));
+                _vm.setPrayerItems2(list.stream().filter(
+                        dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 2).collect(Collectors.toList()));
+                _vm.setPrayerItems3(list.stream().filter(
+                        dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 3).collect(Collectors.toList()));
+                _vm.setPrayerItems4(list.stream().filter(
+                        dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 4).collect(Collectors.toList()));
+                _vm.setPrayerItems5(list.stream().filter(
+                        dogoPrayer -> dogoPrayer.getYm().equals(_ym) && dogoPrayer.getCat() == 5).collect(Collectors.toList()));
                 vmList.add(_vm);
             }
         }
