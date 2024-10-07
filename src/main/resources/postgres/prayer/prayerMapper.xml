@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="metel.cih.api.prayer.mapper.PrayerMapper">
     <select id="selectDogoPrayer" resultType="metel.cih.api.dto.DogoPrayer" parameterType="hashmap">
-        select a.ym, a.cat, a.prayer, a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
+        select a.ym, a.pseq as prayerSeq, a.cat, a.prayer, a.regid as regId, a.regdt as regDt, a.updid as updId, a.upddt as updDt
         from tb_dogo_prayer a
         <if test='ym != null and ym != ""'>
             and ym like concat('%', #{ym}, '%')
