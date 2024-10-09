@@ -1,3 +1,4 @@
+/*
 package metel.cih.api.base;
 
 import metel.cih.api.eunms.ResponseCode;
@@ -25,3 +26,4 @@ public class GlobalRestControllerAdvice {
         );
     }
 }
+*/
