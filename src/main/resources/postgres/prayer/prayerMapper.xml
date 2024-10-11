@@ -16,7 +16,7 @@
         <if test='prayerSeq != null and prayerSeq > -1'>
             and pseq = #{prayerSeq}
         </if>
-        order by a.ym, a.cat
+        order by a.ym, a.pseq
     </select>
 
     <select id="selectYmFromDogoPrayer" resultType="string">
