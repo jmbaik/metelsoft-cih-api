@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metel.cih.api.user.mapper.UserMapper">
+
+    <select id="selectUsers" resultType="metel.cih.api.dto.user.UserDto" parameterType="hashmap">
+        SELECT a.uid, a.log_id as logId, a.name, a.nick, a.pwd, a.email
+        , a.phone, a.gender, a.region, b.name as regionName, a.birth
+        , a.church, a.grade, a.member, a.regdt as regDt, a.upddt as updDt
+        , a.device_id as deviceId
+        FROM tb_user a left outer join tb_area_code b on a.region = b.a_code
+        where not exists (select 'x' from tb_blocked_user c where c.uid = a.uid and c.unblock is null)
+        <if test='uid != null and uid != ""'>
+            and a.uid = #{uid}
+        </if>
+        <if test='logId != null and logId != ""'>
+            and a.log_id = #{logId}
+        </if>
+        <if test='name != null and name != ""'>
+            and a.name like '%' || #{name} || '%'
+        </if>
+        <if test='email != null and email != ""'>
+            and a.email = #{email}
+        </if>
+        <if test='phone != null and phone != ""'>
+            and a.phone = #{phone}
+        </if>
+        <if test='nick != null and nick != ""'>
+            and a.nick = #{nick}
+        </if>
+        <if test='pwd != null and pwd != ""'>
+            and a.pwd = #{pwd}
+        </if>
+        <if test='grade != null and grade != ""'>
+            and a.grade = #{grade}
+        </if>
+        <if test='member != null and member != ""'>
+            and a.member = #{member}
+        </if>
+        <if test='deviceId != null and deviceId != ""'>
+            and a.device_id = #{deviceId}
+        </if>
+    </select>
+
+    <select id="getUserUid" parameterType="metel.cih.api.dto.user.UserDto" resultType="string">
+        select
+        to_char(now(), 'YY') || to_char(now(), 'MM') || '1' || substring(#{phone}, 8)
+        || lpad(cast(count(0)+1 as varchar), 3, '0')
+        from tb_user
+        where phone_tag = substring(#{phone}, 8)
+    </select>
+
+    <update id="mergeUser" parameterType="metel.cih.api.dto.user.UserDto">
+        INSERT INTO tb_user
+        (uid, name, nick, pwd, email, phone, gender, region, birth, church, device_id, phone_tag)
+        VALUES(#{uid}, #{name}, #{nick}, #{pwd}, #{email}, #{phone}, #{gender}, #{region}, #{birth}, #{church},
+        #{device_id}, substring(#{phone}, 8))
+        on conflict(uid) do update set name=#{name}, nick=#{nick}, pwd=#{pwd}, email=#{email}, phone=#{phone}
+        , gender=#{gender}, region=#{region}, birth=#{birth}, church=#{church}, grade=#{grade}
+        , member=#{member}, upddt=now(), device_id=#{deviceId}, phone_tag =substring(#{phone},8)
+    </update>
+
+</mapper>
