@@ -3,17 +3,14 @@
 <mapper namespace="metel.cih.api.user.mapper.UserMapper">
 
     <select id="selectUsers" resultType="metel.cih.api.dto.user.UserDto" parameterType="hashmap">
-        SELECT a.uid, a.log_id as logId, a.name, a.nick, a.pwd, a.email
-        , a.phone, a.gender, a.region, b.name as regionName, a.birth
-        , a.church, a.grade, a.member, a.regdt as regDt, a.upddt as updDt
-        , a.device_id as deviceId
+        SELECT *
         FROM tb_user a left outer join tb_area_code b on a.region = b.a_code
         where not exists (select 'x' from tb_blocked_user c where c.uid = a.uid and c.unblock is null)
         <if test='uid != null and uid != ""'>
             and a.uid = #{uid}
         </if>
-        <if test='logId != null and logId != ""'>
-            and a.log_id = #{logId}
+        <if test='log_id != null and log_id != ""'>
+            and a.log_id = #{log_id}
         </if>
         <if test='name != null and name != ""'>
             and a.name like '%' || #{name} || '%'
@@ -36,8 +33,8 @@
         <if test='member != null and member != ""'>
             and a.member = #{member}
         </if>
-        <if test='deviceId != null and deviceId != ""'>
-            and a.device_id = #{deviceId}
+        <if test='device_id != null and device_id != ""'>
+            and a.device_id = #{device_id}
         </if>
     </select>
 
@@ -56,7 +53,7 @@
         #{device_id}, substring(#{phone}, 8))
         on conflict(uid) do update set name=#{name}, nick=#{nick}, pwd=#{pwd}, email=#{email}, phone=#{phone}
         , gender=#{gender}, region=#{region}, birth=#{birth}, church=#{church}, grade=#{grade}
-        , member=#{member}, upddt=now(), device_id=#{deviceId}, phone_tag =substring(#{phone},8)
+        , member=#{member}, upddt=now(), device_id=#{device_id}, phone_tag =substring(#{phone},8)
     </update>
 
 </mapper>

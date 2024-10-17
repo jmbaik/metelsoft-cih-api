@@ -25,7 +25,7 @@ public class UserController {
             , @RequestParam(value = "pwd") String pwd
     ) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("logId", logId);
+        map.put("log_id", logId);
         map.put("pwd", pwd);
         List<UserDto> list = service.selectUsers(map);
         if (list.isEmpty()) {
@@ -59,5 +59,5 @@ public class UserController {
         int result = service.mergeUser(dto);
         return ApiResponse.Success(result);
     }
-    
+
 }
