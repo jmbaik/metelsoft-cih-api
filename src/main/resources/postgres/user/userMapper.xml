@@ -40,7 +40,7 @@
 
     <select id="getUserUid" parameterType="metel.cih.api.dto.user.UserDto" resultType="string">
         select
-        to_char(now(), 'YY') || to_char(now(), 'MM') || '1' || substring(#{phone}, 8)
+        'x' || to_char(now(), 'YY') || to_char(now(), 'MM') || '1' || substring(#{phone}, 8)
         || lpad(cast(count(0)+1 as varchar), 3, '0')
         from tb_user
         where phone_tag = substring(#{phone}, 8)
@@ -48,10 +48,10 @@
 
     <update id="mergeUser" parameterType="metel.cih.api.dto.user.UserDto">
         INSERT INTO tb_user
-        (uid, name, nick, pwd, email, phone, gender, region, birth, church, device_id, phone_tag)
-        VALUES(#{uid}, #{name}, #{nick}, #{pwd}, #{email}, #{phone}, #{gender}, #{region}, #{birth}, #{church},
+        (uid, log_id, name, nick, pwd, email, phone, gender, region, birth, church, device_id, phone_tag)
+        VALUES(#{uid}, #{log_id}, #{name}, #{nick}, #{pwd}, #{email}, #{phone}, #{gender}, #{region}, #{birth}, #{church},
         #{device_id}, substring(#{phone}, 8))
-        on conflict(uid) do update set name=#{name}, nick=#{nick}, pwd=#{pwd}, email=#{email}, phone=#{phone}
+        on conflict(uid) do update set log_id=#{log_id}, name=#{name}, nick=#{nick}, pwd=#{pwd}, email=#{email}, phone=#{phone}
         , gender=#{gender}, region=#{region}, birth=#{birth}, church=#{church}, grade=#{grade}
         , member=#{member}, upddt=now(), device_id=#{device_id}, phone_tag =substring(#{phone},8)
     </update>
